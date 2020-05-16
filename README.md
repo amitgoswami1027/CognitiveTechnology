@@ -1,4 +1,21 @@
-# A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION: 2006
+
+### COGNITIVE TECHNOLOGY COURSE SETUP 
+* Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
+* Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
+* Step-03: Install the Soar IDE Eclipse Plugin - Once Eclipse is installed, you need to download the Soar IDE plug-in.
+
+#### Important Links
+* 1. Project Instructions : https://github.com/soartech/soaride
+* 2. Percipio (contains the course material):
+     * https://optum.percipio.com/library/95c04f04-8e82-4269-8fdb-2dc0beac97b3
+     * Contact Nicolle Swanson if you’re having trouble accessing this.
+* 3. Piazza (our forum, ask questions here):
+     * https://piazza.com/ocai/spring2020/ct100  
+     * access code: ct100
+* 4. GitHub (contains project codes & more): https://github.com/OptumTechUniversity
+
+
+## A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
 
 ### 1. INTRODUCTION 
 Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and artificial intelligence.
@@ -31,4 +48,5 @@ How can we express the different kinds of knowledge the model must have so that 
 What knowledge becomes part of the state and what knowledge becomes part of the operators? How do we know what an operator application will do? How do we know when the goal has been achieved? To answer these questions, the next section describes how Soar supports goals, problem spaces, states and operators.
  
 ### 5. TYING THE CONTENT TO THE ARCHITECTURE
-
+Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of
+description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems.
