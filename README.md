@@ -1,5 +1,5 @@
 ## COGNITIVE TECHNOLOGY
-
+* What is SOAR ( State, Operator And Result)
 ### COGNITIVE TECHNOLOGY COURSE SETUP 
 * Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
 * Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
@@ -16,8 +16,18 @@
      6. Accept the license agreement on the this screen, and click Next.
      7. Now click Finish to begin installing the plug-in.
      8. You will be asked to verify the plug-in that is being installed. Click Install All to proceed.
-
-Eclipse should now ask you to restart in order to complete the installation
+     9. Eclipse should now ask you to restart in order to complete the installation.
+* Step-04: SOAR PRESPECTIVE: To view the list of available perspectives, from the Window menu choose Open Perspective -> Other, select 
+  SOAR and click "Open".
+* Step-05: CREATE SOAR PROJECT: Click "Create a Project" >> General>> Select Project >> Enter Project Name "HelloWorld" >> Finish. Click   right on the Project Name and select "Include Soar Project Support. We would be to see "S" symbol to confirm this step.
+* Step-06: SOAR FILES: Add New SOAR File to the Project. Let its name be Enigma.soar. 
+* Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple agentt but 
+  there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
+* Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
+  SAMPLE Production : sp { helloworld ( state <s> ^superstate nil) --> (write |I'm sorry Dave.|) (write |I'm afraid I can't do that.|) 
+  (halt) }
+* Step-09: RUNNING SOAR PROJECT: 
+  https://github.com/OptumTechUniversity/CognitiveTechnology/blob/master/SoarJavaDebugger.bat
 #### Important Links
 * 1. Project Setup Instructions : https://github.com/soartech/soaride
 * 2. Percipio (contains the course material):
@@ -27,7 +37,7 @@ Eclipse should now ask you to restart in order to complete the installation
      * https://piazza.com/ocai/spring2020/ct100  
      * access code: ct100
 * 4. GitHub (contains project codes & more): https://github.com/OptumTechUniversity
-* 5.  
+* 5. https://github.com/SoarGroup
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -66,3 +76,5 @@ What knowledge becomes part of the state and what knowledge becomes part of the 
 ### 5. TYING THE CONTENT TO THE ARCHITECTURE
 Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of
 description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems.
+
+## Disclaimer : Above information is noted only for the purpose of Learning and with no intention to public this without the consent of the author of the information. Please feel free to contact me in case of any confusion on the same. Email : amitgoswami1027@gmail.com
