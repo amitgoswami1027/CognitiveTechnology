@@ -1,0 +1,6 @@
+##!
+# @file
+#
+# @created Dell 20200517
+ sp { helloworld ( state <s> ^superstate nil) --> (write |I'm sorry Dave.|) (write |I'm afraid I can't do that.|) 
+  (halt) }
