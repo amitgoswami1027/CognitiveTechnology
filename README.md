@@ -16,9 +16,8 @@
      6. Accept the license agreement on the this screen, and click Next.
      7. Now click Finish to begin installing the plug-in.
      8. You will be asked to verify the plug-in that is being installed. Click Install All to proceed.
-
-Eclipse should now ask you to restart in order to complete the installation.
 ```
+Eclipse should now ask you to restart in order to complete the installation
 #### Important Links
 * 1. Project Setup Instructions : https://github.com/soartech/soaride
 * 2. Percipio (contains the course material):
