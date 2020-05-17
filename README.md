@@ -4,7 +4,7 @@
 * Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
 * Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
 * Step-03: Install the Soar IDE Eclipse Plugin - Once Eclipse is installed, you need to download the Soar IDE plug-in
-   ``` 
+  
      1. From the Help menu in Eclipse, select Install New Software... to open the Install dialog.
      2. Now add a new remote site to download the Soar IDE plug-in:
         * Click the Add... button to open the Add Repository dialog.
@@ -16,7 +16,7 @@
      6. Accept the license agreement on the this screen, and click Next.
      7. Now click Finish to begin installing the plug-in.
      8. You will be asked to verify the plug-in that is being installed. Click Install All to proceed.
-```
+
 Eclipse should now ask you to restart in order to complete the installation
 #### Important Links
 * 1. Project Setup Instructions : https://github.com/soartech/soaride
