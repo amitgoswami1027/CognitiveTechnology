@@ -24,7 +24,7 @@
 * Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple agentt but 
   there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
 * Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
-  SAMPLE Production : sp { helloworld ( state <s> superstate nil)  (write |I'm sorry Dave.|) (write |I'm afraid I can't do that.|)(halt) }
+  SAMPLE Production : sp { helloworld
  
 * Step-09: RUNNING SOAR PROJECT: 
   
