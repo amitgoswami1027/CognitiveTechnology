@@ -58,7 +58,14 @@ What knowledge becomes part of the state and what knowledge becomes part of the 
 5. TYING THE CONTENT TO THE ARCHITECTURE
 Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems. h
 
-  
+### Important Links
+* http://www.matt-versaggi.com/mit_open_courseware/
+* https://optum.percipio.com/library/95c04f04-8e82-4269-8fdb-2dc0beac97b3
+* https://piazza.com/ocai/spring2020/ct100  
+* https://github.com/OptumTechUniversity
+* https://soar.eecs.umich.edu/workshop_registration/ 
+
+
 ### License
 
 Copyright (c) 2015, Soar Technology, Inc. All rights reserved.
