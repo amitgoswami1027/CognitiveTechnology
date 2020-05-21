@@ -27,6 +27,28 @@
 * Step-09: RUNNING SOAR PROJECT: 
 export JAVA_HOME=Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
 
+### SOAR COURSE INTRODUCTION
+#### TOPICS: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo.
+* SOAR INTRODUCTION: SOAR MANUAL chapter 2 & 3 or gentle introduction to SOAR 2016.
+* WHAT IS SOAR : Unified Architecture for building the intelligent systems.
+
+#### WORKING MEMORY
+Working memory contain all SOAR AGENT dynamic information about its world and internal reasoning. In SOAR WM is organized as the Garph structure in STATES. SOAR has two kinds of nodes:
+* IDENTIFIERS : Nodes that has Links emerging from them. Only Identifiers have ATTRIBUTES
+* CONSTANTS : Nodes that does not have Links emerging from them.
+* LINKS: Links are called ATTRIBUTES in SOAR and is prefaced by "^". 
+* OBJECTS : Collection of working memory elements that share the same IDENTIFIER is called OBJECT.
+* AUGMENTATIONS: Working memory elements that make up the OBJECT are called AUGMENTATIONS.
+
+OBJECTS are usually written as a list of augmentations surrounded by parenthesis. 
+
+#### SOAR DECISION CYCLE
+* PROPOSE => DECISION => APPLICATION
+#### EXAMPLE : 
+* Proposal - 'What are all the things that I could do right now'
+* Decision - 'I can only do one thing at once, which one should I pick?'
+* Application - 'Now that I picked one thing to do, I can now actually do it'
+
 ### A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
 
 1. INTRODUCTION : Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and artificial intelligence.
@@ -64,6 +86,8 @@ Architecture must support what is common across many domains, its mechanisms mus
 * https://piazza.com/ocai/spring2020/ct100  
 * https://github.com/OptumTechUniversity
 * https://soar.eecs.umich.edu/workshop_registration/ 
+* SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
+* 
 
 
 ### License
