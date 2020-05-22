@@ -24,57 +24,82 @@
 * Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple agentt but 
   there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
 * Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
-  SAMPLE Production : sp { helloworld ( state <s> ^superstate nil) --> (write |I'm sorry Dave.|) (write |I'm afraid I can't do that.|) 
-  (halt) }
 * Step-09: RUNNING SOAR PROJECT: 
-  https://github.com/OptumTechUniversity/CognitiveTechnology/blob/master/SoarJavaDebugger.bat
-#### Important Links
-* 1. Project Setup Instructions : https://github.com/soartech/soaride
-* 2. Percipio (contains the course material):
-     * https://optum.percipio.com/library/95c04f04-8e82-4269-8fdb-2dc0beac97b3
-     * Contact Nicolle Swanson if you’re having trouble accessing this.
-* 3. Piazza (our forum, ask questions here):
-     * https://piazza.com/ocai/spring2020/ct100  
-     * access code: ct100
-* 4. GitHub (contains project codes & more): https://github.com/OptumTechUniversity
-* 5. https://github.com/SoarGroup
+export JAVA_HOME=Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
 
------------------------------------------------------------------------------------------------------------------------------
+### SOAR COURSE INTRODUCTION
+#### TOPICS: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo.
+* SOAR INTRODUCTION: SOAR MANUAL chapter 2 & 3 or gentle introduction to SOAR 2016.
+* WHAT IS SOAR : Unified Architecture for building the intelligent systems.
 
-## A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
+#### WORKING MEMORY
+Working memory contain all SOAR AGENT dynamic information about its world and internal reasoning. In SOAR WM is organized as the Garph structure in STATES. SOAR has two kinds of nodes:
+* IDENTIFIERS : Nodes that has Links emerging from them. Only Identifiers have ATTRIBUTES
+* CONSTANTS : Nodes that does not have Links emerging from them.
+* LINKS: Links are called ATTRIBUTES in SOAR and is prefaced by "^". 
+* OBJECTS : Collection of working memory elements that share the same IDENTIFIER is called OBJECT.
+* AUGMENTATIONS: Working memory elements that make up the OBJECT are called AUGMENTATIONS.
 
-### 1. INTRODUCTION 
-Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and artificial intelligence.
+OBJECTS are usually written as a list of augmentations surrounded by parenthesis. 
 
-COGNITIVE PHENOMENA - phenomena like problem solving, decision making,language, memory, and learning.
+#### SOAR DECISION CYCLE
+* PROPOSE => DECISION => APPLICATION
+#### EXAMPLE : 
+* Proposal - 'What are all the things that I could do right now'
+* Decision - 'I can only do one thing at once, which one should I pick?'
+* Application - 'Now that I picked one thing to do, I can now actually do it'
 
-### 2. IDEA OF ARCHITECTURE
-Unified theories of cognition (UTCs) - unified theory of cognition means trying to find a set of computationally-realizable mechanisms and structures that can answer all the questions we might want to ask about cognitive behavior. A key piece of
-the puzzle, we believe, lies in the idea of architecture.
-* BEHAVIOR = ARCHITECTURE + CONTENT
-Using this idea, we can define a cognitive architecture as a theory of the fixed mechanisms and structures that underlie
-human cognition. Factoring out what is common across cognitive behaviors across the phenomena explained by microtheories, seems to us to be a significant step toward producing a unified theory of cognition.
+### A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
 
-### 3. WHAT COGNITIVE BEHAVIORS HAVE IN COMMON
-What sort of behaviour should we model in SOAR Architecutre. A cognitive architecture must help produce cognitive behavior. Reading certainly requires cognitive ability. So does solving equations, cooking dinner, driving a car,telling a joke, or playing baseball. In fact, most of our everyday behavior seems to require some degree of thinking to mediate our perceptions and actions. 
-Because every architecture is a theory about what is common to the content it processes, Soar is a theory of what cognitive behaviors have in common. In particular SOAR theory posits that cognitive behaviour has at least the following characteristics:
+1. INTRODUCTION : Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and artificial intelligence.
 
-#### 1. It is Goal Oriented. 
-#### 2. It takes place in a rich, complex, detailed environment
-#### 3. It requires a large amount of knowledge
-#### 4. It requires the use of symbols and abstractions
-#### 5. It is flexible, and a function of the environment
-#### 6. It requires learning from the environment and experience
+#### COGNITIVE PHENOMENA - phenomena like problem solving, decision making,language, memory, and learning.
 
-# BEHAVIOR = ARCHITECTURE + CONTENT
+2. IDEA OF ARCHITECTURE
+Unified theories of cognition (UTCs) - unified theory of cognition means trying to find a set of computationally-realizable mechanisms and structures that can answer all the questions we might want to ask about cognitive behavior. A key piece of the puzzle, we believe, lies in the idea of architecture.
 
-How can we express the different kinds of knowledge the model must have so that it acts in a goal oriented way?representing the knowledge in terms of goals, states, and operators and guiding the choice of which operator to apply by the principle of rationality. 
+BEHAVIOR = ARCHITECTURE + CONTENT Using this idea, we can define a cognitive architecture as a theory of the fixed mechanisms and structures that underlie human cognition. Factoring out what is common across cognitive behaviors across the phenomena explained by microtheories, seems to us to be a significant step toward producing a unified theory of cognition.
 
-### 4. BEHAVIOUR AS A MOVEMENT THROUGH PROBLEM SPACES
+3. WHAT COGNITIVE BEHAVIORS HAVE IN COMMON
+What sort of behaviour should we model in SOAR Architecutre. A cognitive architecture must help produce cognitive behavior. Reading certainly requires cognitive ability. So does solving equations, cooking dinner, driving a car,telling a joke, or playing baseball. In fact, most of our everyday behavior seems to require some degree of thinking to mediate our perceptions and actions. Because every architecture is a theory about what is common to the content it processes, Soar is a theory of what cognitive behaviors have in common. In particular SOAR theory posits that cognitive behaviour has at least the following characteristics:
+
+* 1. It is Goal Oriented.
+* 2. It takes place in a rich, complex, detailed environment
+* 3. It requires a large amount of knowledge
+* 4. It requires the use of symbols and abstraction
+* 5. It is flexible, and a function of the environment
+* 6. It requires learning from the environment and experience
+
+#### BEHAVIOR = ARCHITECTURE + CONTENT
+
+How can we express the different kinds of knowledge the model must have so that it acts in a goal oriented way?representing the knowledge in terms of goals, states, and operators and guiding the choice of which operator to apply by the principle of rationality.
+
+4. BEHAVIOUR AS A MOVEMENT THROUGH PROBLEM SPACES
 What knowledge becomes part of the state and what knowledge becomes part of the operators? How do we know what an operator application will do? How do we know when the goal has been achieved? To answer these questions, the next section describes how Soar supports goals, problem spaces, states and operators.
- 
-### 5. TYING THE CONTENT TO THE ARCHITECTURE
-Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of
-description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems.
 
-## Disclaimer : Above information is noted only for the purpose of Learning and with no intention to public this without the consent of the author of the information. Please feel free to contact me in case of any confusion on the same. Email : amitgoswami1027@gmail.com
+5. TYING THE CONTENT TO THE ARCHITECTURE
+Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems. h
+
+### Important Links
+* http://www.matt-versaggi.com/mit_open_courseware/
+* https://optum.percipio.com/library/95c04f04-8e82-4269-8fdb-2dc0beac97b3
+* https://piazza.com/ocai/spring2020/ct100  
+* https://github.com/OptumTechUniversity
+* https://soar.eecs.umich.edu/workshop_registration/ 
+* SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
+* 
+
+
+### License
+
+Copyright (c) 2015, Soar Technology, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+    Neither the name of Soar Technology, Inc. nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY *EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED *WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. *IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, *INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT *NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR *PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, *WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE *POSSIBILITY OF SUCH *DAMAGE.
