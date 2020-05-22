@@ -1,3 +1,0 @@
-pushd eight-puzzle
-source eight-puzzle.soar
-popd
