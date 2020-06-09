@@ -1,4 +1,4 @@
-## COGNITIVE TECHNOLOGY
+## COGNITIVE TECHNOLOGY - MY Notes for Reference
 
 1. INTRO: Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and 
    artificial intelligence.
@@ -80,7 +80,8 @@ agentt but there can be only one SOAR Agent in the Project. SOAR Agent exists as
 * Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
 
 ### SOAR COURSE INTRODUCTION
-#### Section-02: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo.
+### Section-02: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 
+Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo. - *MY NOTES*
 
 #### SOAR DECISION CYCLE
 * PROPOSE => DECISION => APPLICATION
@@ -141,11 +142,31 @@ taking all the conditions and building out a Conditional Graph. If this conditio
 the proposal's 'Action' section will run, creating an operator. The below WM has two operators in memory, but there could be 
 as many more, one for every rule match. Operators created by rules that don't match will not appear in working memory.
 
-## PROJECT01
+## PROJECT01 - Submissed. 9th June,2020 (ItsTimeToLearnSoar)
 
-
-
- 
+### Section-03: Variables, Advance Rules, Memory Persistance, Operator Persistance - MY NOTES
+#### Memory Persistence
+#### Proposal Rule
+* As a reminder, proposal rules compare the Conditional Graph to the working memory and adds in an operator to it. These 
+  operators will remain in the working memory for as long as all the conditions match in the proposal rule that created the 
+  operator. Once one or more of the conditions in the proposal's condition section fail, the operator will be removed from the 
+  working memory automatically. This type of memory is referred to as 'I supported' or Instantiation supported in the SOAR 
+  documentation.
+* If you do not invalidate one of the conditions in the 'Conditions' section of the proposal rule, the operator will stay 
+  proposed, which will cause your Soar program to produce an error. Even if you want the same action occur in the next cycle, 
+  you must retract the current operator.
+#### Application Rule
+* As a reminder, application rules examine the working memory for an operator and then adds/removes information to the memory. 
+  Any changes made by these rules persistent until you remove them. They are not automatically removed, even if the proposal 
+  rules (and their operators) that went into creating them no longer match/retract. This type of memory is referred to as 'O 
+  supported' or Operator supported, since they were created by an operator.
+* Memory created in these rules persist until you remove them with other rules.
+* Leaving old memory sitting around could cause you issues in the future. It may cause some of your other rules to fire if you 
+  are checking for this memory (and you didn't realize it existed there).
+#### Operator Persistence
+Operators should not persist into the next cycle. This is occurring since these changes persist. This shouldn't occur due to a 
+theoretical reason: Soar operators should not exist across cycles as they should get all their work done in the application 
+phase and then be removed.
 
 
 ### Important Links
