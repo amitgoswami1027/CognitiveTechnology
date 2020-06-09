@@ -1,14 +1,59 @@
 ## COGNITIVE TECHNOLOGY
+
+1. INTRO: Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and 
+   artificial intelligence.
+   #### COGNITIVE PHENOMENA - phenomena like problem solving, decision making,language, memory, and learning.
+
+2. IDEA OF ARCHITECTURE
+   Unified theories of cognition (UTCs) - unified theory of cognition means trying to find a set of computationally-realizable 
+   mechanisms and structures that can answer all the questions we might want to ask about cognitive behavior. A key piece of  
+   the puzzle, we believe, lies in the idea of architecture.
+
+   BEHAVIOR = ARCHITECTURE + CONTENT Using this idea, we can define a cognitive architecture as a theory of the fixed  
+   mechanisms and structures that underlie human cognition. Factoring out what is common across cognitive behaviors across the 
+   phenomena explained by microtheories, seems to us to be a significant step toward producing a unified theory of cognition.
+
+3. WHAT COGNITIVE BEHAVIORS HAVE IN COMMON
+   What sort of behaviour should we model in SOAR Architecutre. A cognitive architecture must help produce cognitive behavior. 
+   Reading certainly requires cognitive ability. So does solving equations, cooking dinner, driving a car,telling a joke, or 
+   playing baseball. In fact, most of our everyday behavior seems to require some degree of thinking to mediate our 
+   perceptions and actions. Because every architecture is a theory about what is common to the content it processes, Soar is a 
+   theory of what cognitive behaviors have in common. In particular SOAR theory posits that cognitive behaviour has at least 
+   the following characteristics
+   * 1. It is Goal Oriented.
+   * 2. It takes place in a rich, complex, detailed environment
+   * 3. It requires a large amount of knowledge
+   * 4. It requires the use of symbols and abstraction
+   * 5. It is flexible, and a function of the environment
+   * 6. It requires learning from the environment and experience
+
+   #### BEHAVIOR = ARCHITECTURE + CONTENT
+
+  How can we express the different kinds of knowledge the model must have so that it acts in a goal oriented way?representing 
+  the knowledge in terms of goals, states, and operators and guiding the choice of which operator to apply by the principle of 
+  rationality.
+
+4. BEHAVIOUR AS A MOVEMENT THROUGH PROBLEM SPACES
+   What knowledge becomes part of the state and what knowledge becomes part of the operators? How do we know what an operator 
+   application will do? How do we know when the goal has been achieved? To answer these questions, the next section describes 
+   how Soar supports goals, problem spaces, states and operators.
+
+5. TYING THE CONTENT TO THE ARCHITECTURE
+   Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of 
+   description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, 
+   problem spaces, states, and operators that is common across all problems. h
+
+### SOAR ARCHITECTURE
 * What is SOAR ( State, Operator And Result)
-* WHAT IS SOAR : Unified Architecture for building the intelligent systems.
+* WHAT IS SOAR : Unified Architecture for building the intelligent systems
 
-
-### COGNITIVE TECHNOLOGY COURSE SETUP 
+### SOAR SETUP 
 Supported Development Tools/Libraries and Required Downloads 
 * Computer with Java installed (1.8.0_144 required) - Mac highly recommended 
 * VS Code (App Store) or Install Eclipse
 * Graphviz
-### STEPS:
+
+#### STEPS:
 * Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
 * Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
 * Step-03: Install the Soar IDE Eclipse Plugin - Once Eclipse is installed, you need to download the Soar IDE plug-in
@@ -63,6 +108,13 @@ OBJECTS are usually written as a list of augmentations surrounded by parenthesis
 
 ![image](https://user-images.githubusercontent.com/13011167/84102801-0e666d80-aa2f-11ea-8d7b-86c4dd4b1454.png)
 
+Soar has a decision cycle to makes decisions. At the input step, it checks the input Working Memory for values. In the 
+proposal step, Soar utilizes procedural memory rules to create operators if the situation is correct (ie. certain working 
+memory elements in the rules match). The operator decision step is automatic but requires special tuning that we'll talk about 
+later. This is where Soar picks one and only one operator. At the operator application step Soar checks which rules match the 
+situation and have the selected operator. Finally, in the Output step Soar outputs to the working memory. The cycle then 
+repeats.
+
 #### Procedural Memory
 Let's assume for the purposes of this example that our environment will tell us it is raining with the use of input-link variable. We'll 'pack the umbrella' by placing an attribute/value pair of pack/umbrella on the output-link.
 Proposal Rule 1: If it is raining outside then create an operator 'ItsRaining' Apply Rule 1: If an operator exists in the working memory called 'ItsRaining' and it was selected in the decision phase then put pack/umbrella on the output link
@@ -76,48 +128,25 @@ memory
 * Actions: By referencing the variables in the 'Conditions' Section, code in this section creates an Operator in the Working 
 Memory. One important thing, the decision's action isn't occurring here (ie. the cake doesn't get baked or the robot doesn't 
 move). The 'action' in this case is proposing that the action take place.
+#### Operator Decision: This step is automatic. SOAR picks a single operator to apply.SOAR notated this by adding another '
+Operator' link on it.
 #### Application Rules :Check if the situation is correct and do the action. Checking the situation' in this case has three 
 requirements: The operator is in the working memory, it was selected in the 'Operator Decision Phase', and any other working memory elements match (like proposal rules).
 * Conditions: Check the working memory to see if a certain operator exists and has a preference (More on this in later 
 sections) and to check that other Working Memory Elements Exist (if needed).
 * Actions: By referencing the variables in the 'Conditions' Section, code in this section performs the action by adding modifying/adding working elements.
 
+SOAR looks at all the proposal rules to see if the situation is correct for the 'Actions' section to run. It does this by 
+taking all the conditions and building out a Conditional Graph. If this conditional graph is a subgraph of the Working Memory, 
+the proposal's 'Action' section will run, creating an operator. The below WM has two operators in memory, but there could be 
+as many more, one for every rule match. Operators created by rules that don't match will not appear in working memory.
+
+## PROJECT01
 
 
 
+ 
 
-
-
-### A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
-
-1. INTRODUCTION : Many Disciplines contribute to the field of Cognitive Science that include psychology, linguistics,anthropology, and artificial intelligence.
-
-#### COGNITIVE PHENOMENA - phenomena like problem solving, decision making,language, memory, and learning.
-
-2. IDEA OF ARCHITECTURE
-Unified theories of cognition (UTCs) - unified theory of cognition means trying to find a set of computationally-realizable mechanisms and structures that can answer all the questions we might want to ask about cognitive behavior. A key piece of the puzzle, we believe, lies in the idea of architecture.
-
-BEHAVIOR = ARCHITECTURE + CONTENT Using this idea, we can define a cognitive architecture as a theory of the fixed mechanisms and structures that underlie human cognition. Factoring out what is common across cognitive behaviors across the phenomena explained by microtheories, seems to us to be a significant step toward producing a unified theory of cognition.
-
-3. WHAT COGNITIVE BEHAVIORS HAVE IN COMMON
-What sort of behaviour should we model in SOAR Architecutre. A cognitive architecture must help produce cognitive behavior. Reading certainly requires cognitive ability. So does solving equations, cooking dinner, driving a car,telling a joke, or playing baseball. In fact, most of our everyday behavior seems to require some degree of thinking to mediate our perceptions and actions. Because every architecture is a theory about what is common to the content it processes, Soar is a theory of what cognitive behaviors have in common. In particular SOAR theory posits that cognitive behaviour has at least the following characteristics:
-
-* 1. It is Goal Oriented.
-* 2. It takes place in a rich, complex, detailed environment
-* 3. It requires a large amount of knowledge
-* 4. It requires the use of symbols and abstraction
-* 5. It is flexible, and a function of the environment
-* 6. It requires learning from the environment and experience
-
-#### BEHAVIOR = ARCHITECTURE + CONTENT
-
-How can we express the different kinds of knowledge the model must have so that it acts in a goal oriented way?representing the knowledge in terms of goals, states, and operators and guiding the choice of which operator to apply by the principle of rationality.
-
-4. BEHAVIOUR AS A MOVEMENT THROUGH PROBLEM SPACES
-What knowledge becomes part of the state and what knowledge becomes part of the operators? How do we know what an operator application will do? How do we know when the goal has been achieved? To answer these questions, the next section describes how Soar supports goals, problem spaces, states and operators.
-
-5. TYING THE CONTENT TO THE ARCHITECTURE
-Architecture must support what is common across many domains, its mechanisms must process a domain-independent level of description. What is common across all domains and problems? In Soar, it is the decomposition of knowledge into goals, problem spaces, states, and operators that is common across all problems. h
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
@@ -126,7 +155,6 @@ Architecture must support what is common across many domains, its mechanisms mus
 * https://github.com/OptumTechUniversity
 * https://soar.eecs.umich.edu/workshop_registration/ 
 * SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
-
 
 
 ### License
