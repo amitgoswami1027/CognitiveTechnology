@@ -1,4 +1,4 @@
-wm add I2 ^name echo
+wm add I2 ^ItsTimeToLearSoar true
 visualize image-type jpg
 visualize architectural-wmes on
 
@@ -6,5 +6,21 @@ visualize architectural-wmes on
 #TODO: Create a proposal rule that proposes an operator if the attribute/value pair of name/<var> exists on the input-link
 #With <var> equaling any string
 
+sp {propose*ItsTimeToLearnSoar
+ (state <s> ^type state)
+ (<s> ^io <io>)
+ (<io> ^input-link <input>)
+ (<input> ^ItsTimeToLearnSoar true)
 
-#TODO: Create a application rule that checks if the operator is proposed. Apply the operator by printing the string on the input link.
+-->
+ (<s> ^operator <o> + =)
+ (<o> ^name TimeToLearnSoar)
+}
+
+sp { apply*ItsTimeToLearnSoar
+   (state <s> ^operator <o>)
+   (<o> ^TimeToLearnSoar true)
+-->
+   (write | It's Time To Learn Soar|)
+
+}
