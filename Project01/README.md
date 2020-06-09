@@ -15,14 +15,6 @@ visualize architectural-wmes on
 #TODO: Create a proposal rule that proposes an operator if the attribute/value pair of name/<var> exists on the input-link
 #With <var> equaling any string
 
-wm add I2 ^ItsTimeToLearSoar true
-visualize image-type jpg
-visualize architectural-wmes on
-
-
-#TODO: Create a proposal rule that proposes an operator if the attribute/value pair of name/<var> exists on the input-link
-#With <var> equaling any string
-
 sp {propose*ItsTimeToLearnSoar
  (state <s> ^type state)
  (<s> ^io <io>)
