@@ -1,6 +1,6 @@
 ## COGNITIVE TECHNOLOGY- SOAR
-### PROJECT01
-#### STEP01:Download the below code from the course repo and place it in your SOAR/Bin folder. You can load it in by typing 
+### PROJECT01- Sibmission
+#### Download the below code from the course repo and place it in your SOAR/Bin folder. You can load it in by typing 
 source project1.SOAR' in your Soar debugger.
 
 Within the file you find two '#TODO' comments, representing the two rules that you will need to write. It is required that the 
