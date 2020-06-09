@@ -1,5 +1,5 @@
 ## COGNITIVE TECHNOLOGY- SOAR
-### PROJECT01- Sibmission
+### PROJECT01- Submission
 #### Download the below code from the course repo and place it in your SOAR/Bin folder. You can load it in by typing 
 source project1.SOAR' in your Soar debugger.
 
