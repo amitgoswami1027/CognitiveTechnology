@@ -1,10 +1,17 @@
 ## COGNITIVE TECHNOLOGY
 * What is SOAR ( State, Operator And Result)
+* WHAT IS SOAR : Unified Architecture for building the intelligent systems.
+
+
 ### COGNITIVE TECHNOLOGY COURSE SETUP 
+Supported Development Tools/Libraries and Required Downloads 
+* Computer with Java installed (1.8.0_144 required) - Mac highly recommended 
+* VS Code (App Store) or Install Eclipse
+* Graphviz
+### STEPS:
 * Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
 * Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
 * Step-03: Install the Soar IDE Eclipse Plugin - Once Eclipse is installed, you need to download the Soar IDE plug-in
-  
      1. From the Help menu in Eclipse, select Install New Software... to open the Install dialog.
      2. Now add a new remote site to download the Soar IDE plug-in:
         * Click the Add... button to open the Add Repository dialog.
@@ -17,20 +24,32 @@
      7. Now click Finish to begin installing the plug-in.
      8. You will be asked to verify the plug-in that is being installed. Click Install All to proceed.
      9. Eclipse should now ask you to restart in order to complete the installation.
-* Step-04: SOAR PRESPECTIVE: To view the list of available perspectives, from the Window menu choose Open Perspective -> Other, select 
-  SOAR and click "Open".
-* Step-05: CREATE SOAR PROJECT: Click "Create a Project" >> General>> Select Project >> Enter Project Name "HelloWorld" >> Finish. Click   right on the Project Name and select "Include Soar Project Support. We would be to see "S" symbol to confirm this step.
+* Step-04: SOAR PRESPECTIVE: To view the list of available perspectives, from the Window menu choose Open Perspective -> 
+Other, select SOAR and click "Open".
+* Step-05: CREATE SOAR PROJECT: Click "Create a Project" >> General>> Select Project >> Enter Project Name "HelloWorld" >> 
+Finish. Click   right on the Project Name and select "Include Soar Project Support. We would be to see "S" symbol to confirm 
+this step.
 * Step-06: SOAR FILES: Add New SOAR File to the Project. Let its name be Enigma.soar. 
-* Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple agentt but 
-  there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
+* Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple 
+agentt but there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
 * Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
-* Step-09: RUNNING SOAR PROJECT: 
-export JAVA_HOME=Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
 
 ### SOAR COURSE INTRODUCTION
-#### TOPICS: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo.
-* SOAR INTRODUCTION: SOAR MANUAL chapter 2 & 3 or gentle introduction to SOAR 2016.
-* WHAT IS SOAR : Unified Architecture for building the intelligent systems.
+#### Section-02: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo.
+
+#### SOAR DECISION CYCLE
+* PROPOSE => DECISION => APPLICATION
+#### EXAMPLE: 
+* Proposal - 'What are all the things that I could do right now'
+* Decision - 'I can only do one thing at once, which one should I pick?'
+* Application - 'Now that I picked one thing to do, I can now actually do it'
+* Multitasking is an illusion.
+
+![image](https://user-images.githubusercontent.com/13011167/84102103-2c32d300-aa2d-11ea-89e6-cfd083edabfb.png)
+
+Real world example: We are building an agent to play a simple video game. The locations of the enemies and our player's health 
+are loaded into the input link, which allows us to propose operators based on that knowledge. The direction our character 
+moves and the moves it makes are sent back to the video game on the output link.
 
 #### WORKING MEMORY
 Working memory contain all SOAR AGENT dynamic information about its world and internal reasoning. In SOAR WM is organized as the Garph structure in STATES. SOAR has two kinds of nodes:
@@ -42,12 +61,32 @@ Working memory contain all SOAR AGENT dynamic information about its world and in
 
 OBJECTS are usually written as a list of augmentations surrounded by parenthesis. 
 
-#### SOAR DECISION CYCLE
-* PROPOSE => DECISION => APPLICATION
-#### EXAMPLE : 
-* Proposal - 'What are all the things that I could do right now'
-* Decision - 'I can only do one thing at once, which one should I pick?'
-* Application - 'Now that I picked one thing to do, I can now actually do it'
+![image](https://user-images.githubusercontent.com/13011167/84102801-0e666d80-aa2f-11ea-8d7b-86c4dd4b1454.png)
+
+#### Procedural Memory
+Let's assume for the purposes of this example that our environment will tell us it is raining with the use of input-link variable. We'll 'pack the umbrella' by placing an attribute/value pair of pack/umbrella on the output-link.
+Proposal Rule 1: If it is raining outside then create an operator 'ItsRaining' Apply Rule 1: If an operator exists in the working memory called 'ItsRaining' and it was selected in the decision phase then put pack/umbrella on the output link
+
+![image](https://user-images.githubusercontent.com/13011167/84103152-e1ff2100-aa2f-11ea-9d31-a54a2db472fe.png)
+
+### Specific Rule Syntax
+#### Proposal Rules: Check if the situation is correct for an action to occur, propose that we do the action. 
+* Conditions: The conditions of the proposal rules ensure that the situation is good fit by matching elements in the working 
+memory
+* Actions: By referencing the variables in the 'Conditions' Section, code in this section creates an Operator in the Working 
+Memory. One important thing, the decision's action isn't occurring here (ie. the cake doesn't get baked or the robot doesn't 
+move). The 'action' in this case is proposing that the action take place.
+#### Application Rules :Check if the situation is correct and do the action. Checking the situation' in this case has three 
+requirements: The operator is in the working memory, it was selected in the 'Operator Decision Phase', and any other working memory elements match (like proposal rules).
+* Conditions: Check the working memory to see if a certain operator exists and has a preference (More on this in later 
+sections) and to check that other Working Memory Elements Exist (if needed).
+* Actions: By referencing the variables in the 'Conditions' Section, code in this section performs the action by adding modifying/adding working elements.
+
+
+
+
+
+
 
 ### A GENTLE INTRODUCTION TO SOAR - AN ARCHITECTURE FOR HUMAN COGNITION
 
@@ -87,7 +126,7 @@ Architecture must support what is common across many domains, its mechanisms mus
 * https://github.com/OptumTechUniversity
 * https://soar.eecs.umich.edu/workshop_registration/ 
 * SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
-* 
+
 
 
 ### License
