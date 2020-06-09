@@ -7,7 +7,7 @@ Within the file you find two '#TODO' comments, representing the two rules that y
 variable is passed within the operator itself. Avoid matching the input-link in the application rule to retrieve it.
 
 ####Project1.soar
-wm add I2 ^ItsTimeToLearSoar true
+wm add I2 ^ItsTimeToLearnSoar true
 visualize image-type jpg
 visualize architectural-wmes on
 
