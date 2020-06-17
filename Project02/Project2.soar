@@ -1,2 +1,75 @@
 visualize image-type jpg
 visualize architectural-wmes on
+
+sp {propose*initBank
+   (state <s> ^superstate nil
+               -^AccountBalance)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name Bank)
+}
+
+sp {apply*initBank
+   (state <s> ^operator <o>)
+   (<o> ^name Bank)
+-->
+   (<s> ^AccountBalance 900)
+}
+
+sp {propose*AccountBalancegreaterthan1000
+   (state <s> ^AccountBalance >= 1000)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name AccountBalancegreaterthan1000)
+}
+
+sp {apply*AccountBalancegreaterthan1000
+   (state <s> ^operator <o> 
+              ^AccountBalance <AccountBalance>)
+   (<o> ^name AccountBalancegreaterthan1000)
+-->
+   (<s> ^AccountBalance <AccountBalance> -
+        ^AccountBalance (+ 4000 <AccountBalance>))
+}
+
+sp {propose*AccountBalancelesserthan1000
+   (state <s> ^AccountBalance < 1000)
+--> 
+   (<s> ^operator <o> +)
+   (<o> ^name AccountBalancelesserthan1000)
+}
+
+sp {apply*AccountBalancelesserthan1000
+   (state <s> ^operator <o>
+              ^AccountBalance <AccountBalance>)
+   (<o> ^name AccountBalancelesserthan1000)
+-->
+   (<s> ^AccountBalance <AccountBalance> -
+        ^AccountBalance (+ 5000 <AccountBalance>))
+}
+
+
+sp {detect*account5000
+   (state <s> ^AccountBalance > 10000)
+-->
+ #  (write (crlf) <AccountBalance>)  
+ (halt)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
