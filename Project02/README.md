@@ -19,3 +19,7 @@ SNAPSHOTS OF THE SOARJAVEDEBUGGER
 ![image](https://user-images.githubusercontent.com/13011167/84946548-83f4cc80-b106-11ea-87e4-c0d686fc9022.png)
 
 
+
+## Section 2: Self-Assessment 2
+
+
