@@ -1,14 +1,18 @@
 visualize image-type jpg
 visualize architectural-wmes on
 
+#Check if the attribute of 'AccountBalance' does not exit for <s>.
 sp {propose*initBank
    (state <s> ^superstate nil
                -^AccountBalance)
 -->
+#Create a New Operator
    (<s> ^operator <o> +)
    (<o> ^name Bank)
 }
 
+#Verify that Operator has an attribute of 'AccountBalance'
+# On the mian state Create an attribute/value pair of name/AccountBalance
 sp {apply*initBank
    (state <s> ^operator <o>)
    (<o> ^name Bank)
@@ -16,6 +20,8 @@ sp {apply*initBank
    (<s> ^AccountBalance 900)
 }
 
+#Check if the value connected to attribute AccountBalance is greater than 1000
+#Create a new Operator- AccountBalacegraterthan1000
 sp {propose*AccountBalancegreaterthan1000
    (state <s> ^AccountBalance >= 1000)
 -->
@@ -52,8 +58,8 @@ sp {apply*AccountBalancelesserthan1000
 sp {detect*account5000
    (state <s> ^AccountBalance > 10000)
 -->
- #  (write (crlf) <AccountBalance>)  
- (halt)
+    (write |Balance over five thousand|)  
+ #(halt)
 }
 
 
