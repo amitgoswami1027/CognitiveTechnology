@@ -56,7 +56,7 @@ sp {apply*AccountBalancelesserthan1000
 
 
 sp {detect*account5000
-   (state <s> ^AccountBalance > 10000)
+   (state <s> ^AccountBalance > 5000)
 -->
     (write |Balance over five thousand|)  
  #(halt)
