@@ -168,6 +168,19 @@ Operators should not persist into the next cycle. This is occurring since these 
 theoretical reason: Soar operators should not exist across cycles as they should get all their work done in the application 
 phase and then be removed.
 
+## PROJECT03 - Notes for Reference
+### Impasses and Substates
+Whenever there is the Operator Tie and Soar cannot able to take the decision to which operator to apply, it is known as Impassess. Soar resolve this by creating the substates.Purpose of this new substate is to resolve the impasse. There are six different types of the Impasses which require different resolution methods. New substate is linked to our original state and contain the description of the issue. There are four type of Impasses:
+
+#### Tie Impasse - A tie impasse arises if the preferences do not distinguish between two or more operators that have acceptable preferences. If two operators both have best or worst preferences, they will tie unless additional preferences distinguish between them.
+#### Conflict Impasse- A conflict impasse arises if at least two values have conicting better or worse preferences (such as A is better than B and B is better than A) for an operator, and neither one is rejected, prohibited, or required.
+#### Constraint Failure Impasse - A constraint-failure impasse arises if there is more than one required value for an operator, or if a value has both a require and a prohibit preference. These preferences represent constraints on the legal selections that can be made for a decision and if they conflict, no progress can be made from the current situation and the impasse cannot be resolved by additional preferences.
+#### No-Change Impasse - A no-change impasse arises if a new operator is not selected during the decision procedure. There are two types of no-change impasses: state no-change and operator no-change:
+* State no-change impasse | A state no-change impasse occurs when there are no acceptable (or require) preferences to suggest operators for the current state
+(or all the acceptable values have also been rejected). The decision procedure cannot select a new operator.
+* Operator no-change impasse | An operator no-change impasse occurs when either a new operator is selected for the current state but no additional productions
+match during the application phase, or a new operator is not selected during the next decision phase.
+
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
