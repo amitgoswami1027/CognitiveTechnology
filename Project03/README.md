@@ -2,17 +2,17 @@
 
 ### Requirements: 
 #### Write an elaboration rule that adds both values and places it into the working memory. 
-     * The attribute should be named 'combinedVals'. 
-     * Example: <s> ^combinedVals 20 
+* The attribute should be named 'combinedVals'. 
+* Example: <s> ^combinedVals 20 
 #### Operator 'decrease2' (preference of >) 
-     * Only propose the operator if combinedVals is greater than 20. 
-     * To apply the operator, decrease val1 by 2 o Both rules should only fire in S1 
+* Only propose the operator if combinedVals is greater than 20. 
+* To apply the operator, decrease val1 by 2 o Both rules should only fire in S1 
 #### Operator 'decrease1' (preference of >) 
-     * Only propose the operator if combinedVals is greater than 0.
-     * To apply the operator, decrease val1 by 1 o Both rules should only fire in S1 
+* Only propose the operator if combinedVals is greater than 0.
+* To apply the operator, decrease val1 by 1 o Both rules should only fire in S1 
 #### Operator breakImpasse 
-     * Prefer decrease2 
-     * Only propose this operator in the substate.
+* Prefer decrease2 
+* Only propose this operator in the substate.
 
 ```
 visualize image-type jpg
