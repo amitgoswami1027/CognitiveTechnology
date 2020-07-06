@@ -1,5 +1,6 @@
 ## COGNITIVE TECHNOLOGY - Project03 - Submitted
 
+```
 ### Requirements: 
 #### Write an elaboration rule that adds both values and places it into the working memory. 
    * The attribute should be named 'combinedVals'. 
@@ -13,7 +14,7 @@
 #### Operator breakImpasse 
    * Prefer decrease2 
    * Only propose this operator in the substate.
-
+```
 ```
 visualize image-type jpg
 visualize architectural-wmes on
