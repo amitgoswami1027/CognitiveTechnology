@@ -123,8 +123,12 @@ sp {apply*Substate*breakImpasse
 }
    
 ```
+### SNAPSHOTS
+![image](https://user-images.githubusercontent.com/13011167/86610491-0ae0ea80-bfcb-11ea-8226-0a7d353cd49b.png)
 
+![image](https://user-images.githubusercontent.com/13011167/86610759-6c08be00-bfcb-11ea-817a-7743b9479715.png)
 
+![image](https://user-images.githubusercontent.com/13011167/86610895-9195c780-bfcb-11ea-804a-41a9249f85d0.png)
 
-
+![image](https://user-images.githubusercontent.com/13011167/86610987-aeca9600-bfcb-11ea-8979-152aa5c52774.png)
 
