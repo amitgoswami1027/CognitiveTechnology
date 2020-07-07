@@ -200,7 +200,15 @@ match during the application phase, or a new operator is not selected during the
 ```
 * All of semantic memory storing occurs just before the output phase in the decision making cycle. 
 * RETRIEVING MEMORY - Retriving semanitc memory is also done with command link. The retrieved memory is stored on the result link. There are two ways to retriving memory. Cue and NON-Cue.
-* CUE - In cue retrievels, the agent searches for an LTI that matches the one supplied on the commandlink. <s> ^smem.command.query <cueID>. Since this operations occurs at the end of decision making cycle, the results will be available in the next cycle. The result from the operation will be stored here: <s> ^smem.result.retrieve <cueID> . Using the cueID, you can describe what LTI you are trying to retrieve. 
+* CUE - In cue retrievels, the agent searches for an LTI that matches the one supplied on the commandlink. 
+```
+<s> ^smem.command.query <cueID>. 
+```
+Since this operations occurs at the end of decision making cycle, the results will be available in the next cycle. The result from the operation will be stored here: 
+```
+<s> ^smem.result.retrieve <cueID> . 
+```
+Using the cueID, you can describe what LTI you are trying to retrieve. 
 * NON-CUE - Non-cue retrievels are done when you already have a STI in memory (which is linked to an LTI). 
 
 ### EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables- PHASE: Controls which phase in the decison making process , storage take place at. TRIGGER: The result that concludes an episode. 
