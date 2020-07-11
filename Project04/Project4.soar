@@ -1,6 +1,10 @@
 visualize image-type jpg
 visualize architectural-wmes on
 
+# SOAR COURSE PROJECT04 Submission
+# AMIT GOSWAMI
+
+
 sp {propose*init
    (state <s> ^type state)
    (<s> ^superstate nil)

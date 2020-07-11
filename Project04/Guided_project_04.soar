@@ -1,6 +1,10 @@
 visualize image-type jpg
 visualize architectural-wmes on
 
+# SOAR COARSE GUIDED PROJECT04 - Section05
+# AMIT GOSWAMI
+
+
 sp {propose*init
    #Make the state, check that is has a type of 'state'
    (state <s> ^type state)
