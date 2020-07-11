@@ -1,6 +1,9 @@
 visualize image-type jpg
 visualize architectural-wmes on
 
+#PROJECT03 SUBMISSION FOR SOAR COURSE
+# AMIT GOSWAMI
+
 sp {propose*init
    (state <s> ^type state)
    (<s> ^superstate nil)
@@ -111,7 +114,6 @@ sp {apply*Substate*breakImpasse
 -->
 
    (<ss> ^operator <o2> > <o1>)
-
 }
    
 
