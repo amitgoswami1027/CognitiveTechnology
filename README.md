@@ -142,7 +142,7 @@ taking all the conditions and building out a Conditional Graph. If this conditio
 the proposal's 'Action' section will run, creating an operator. The below WM has two operators in memory, but there could be 
 as many more, one for every rule match. Operators created by rules that don't match will not appear in working memory.
 
-## PROJECT01 - Submissed. 9th June,2020 (ItsTimeToLearnSoar)
+## PROJECT01
 
 ### Section-03: Variables, Advance Rules, Memory Persistance, Operator Persistance - MY NOTES
 #### Memory Persistence
@@ -180,6 +180,41 @@ Whenever there is the Operator Tie and Soar cannot able to take the decision to 
 (or all the acceptable values have also been rejected). The decision procedure cannot select a new operator.
 * Operator no-change impasse | An operator no-change impasse occurs when either a new operator is selected for the current state but no additional productions
 match during the application phase, or a new operator is not selected during the next decision phase.
+
+## PROJECT04 - Notes for Reference
+### SEMANTIC MEMORY - SM is used for storing the long term knowledge and facts. e.g red id color, fire is hot and sky is blue. 
+* Before we begin, be sure to Enable the semantic memory as it is disabled by default. The Soar Data loader enables it automatically, but if you are using the stock debugger, run the following command: sem --set learning on
+* Semantic working memory cans store a series of multiple disconnected graphs. These graphs are not initially connected to WM.
+* Identifiers in the SM are reffered to as Long Term identifiers (LTI). These exisit only in the Semantic Memory.
+* How can we link this knowledge from the semantic memory? We can do this by linking one of the LTIs to a short term identifiers (STI) that exits in WM. 
+* In the WM graph - smem attribute exists which ultimately connects to the 'command' and 'result' attributes. 
+* The simplest way to add the semantic memory to soar is with a command in debugger.
+
+```STORING MEMORY
+ smem --add{
+ (<n1> ^name alice ^friend <n2>)
+ (<n2>  ^name bob ^friend <n1> <n3>)
+ (<n3> ^name charley) 
+ 
+ }
+```
+* All of semantic memory storing occurs just before the output phase in the decision making cycle. 
+* RETRIEVING MEMORY - Retriving semanitc memory is also done with command link. The retrieved memory is stored on the result link. There are two ways to retriving memory. Cue and NON-Cue.
+* CUE - In cue retrievels, the agent searches for an LTI that matches the one supplied on the commandlink. 
+```
+<s> ^smem.command.query <cueID>. 
+```
+Since this operations occurs at the end of decision making cycle, the results will be available in the next cycle. The result from the operation will be stored here: 
+```
+<s> ^smem.result.retrieve <cueID> . 
+```
+Using the cueID, you can describe what LTI you are trying to retrieve. 
+* NON-CUE - Non-cue retrievels are done when you already have a STI in memory (which is linked to an LTI). 
+
+### EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables- PHASE: Controls which phase in the decison making process , storage take place at. TRIGGER: The result that concludes an episode. 
+* Episodic memory retrievel - Present-id displays the current iteration. The agent modifies the 'command' link and result, errors and metadata and returned on the 'result link. EM can be saved to your computer , so it can be loaded in if you need it. 
+
+
 
 
 ### Important Links
