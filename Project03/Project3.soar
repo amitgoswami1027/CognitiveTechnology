@@ -76,7 +76,7 @@ sp { apply*process1
 
 -->
    (<s> ^combinedVals <calval> -)
-   (<s> ^comninedVals (- <calval> 1))
+   (<s> ^combinedVals (- <calval> 1))
 }
 
 #Operator breakImpasse
