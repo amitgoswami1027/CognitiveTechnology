@@ -28,7 +28,6 @@ sp {apply*init
 sp {elaborate*combinedVals
    (state <s> ^value1 <val1>)
    (<s> ^value2 <val2>)
-
 -->
    (<s> ^combinedVals (+ <val1> <val2>) )
 
@@ -39,27 +38,23 @@ sp {elaborate*combinedVals
 # To apply the operator , decrease val1 by 2
 # both rules should only fire in S1
 
-sp {propose*process1
-   (state <s> ^type state)
-  # (<s> ^combinedVals <cval>)
-  # (<s> ^superstate nil)
-   (<s> ^combinedVals <cval> > 20) 
-
+sp {propose*process2
+   (state <s> ^combinedVals <calval> > 20) 
 -->
-
-   (<s> ^operator <o> +  >)
-   (<o> ^name decrease2)
+   (<s> ^operator <o> + >)
+   (<o> ^oper2 decrease2)
+  
 }
 
-sp { apply*process1
-   (state <s> ^operator <o>)
-   ( <s> ^combinedVals <cval>)
-   ( <o> ^name decrease2)
+sp { apply*process2
+   ( state <s> ^operator <o> )
+   ( <o> ^oper2 decrease2)
+   ( <s> ^combinedVals <calval> )
 
 -->
-
-   (<s> ^combinedVals <cval> -
-         ^combinedVals (- <cval> 2))
+   (<s> ^combinedVals <calval> -)
+   (<s> ^combinedVals (- <calval> 2))
+   (write |Processing the decrease2...| <calval>)
 }
 
 # Operator 'decrease1' (preference of >)
@@ -67,26 +62,21 @@ sp { apply*process1
 # To apply the operator, decrease val1 by 1
 # both rules should only fire in S1
 
-sp {propose*process2
-   (state <s> ^type state)
-  # (<s> ^combinedVals <cval>)
-  # (<s> ^superstate nil)
-   (<s> ^combinedVals <cval> >0)
-
+sp {propose*process1
+   (state <s> ^combinedVals <calval> > 0)
 -->
-   (<s> ^operator <o> + >)
-   (<o> ^name decrease1)
+   (<s> ^operator <o> +  >)
+   (<o> ^oper1 decrease1)
 }
 
-sp { apply*process2
+sp { apply*process1
    (state <s> ^operator <o>)
-   (<s> ^combinedVals <cval>)
-   (<o> ^name decrease1)
+   (<o> ^oper1 decrease1)
+   (<s> ^combinedVals <calval>)
 
 -->
-
-   (<s> ^combinedVals <cval> -
-         ^combinedVals (- <cval> 1)) 
+   (<s> ^combinedVals <calval> -)
+   (<s> ^comninedVals (- <calval> 1))
 }
 
 #Operator breakImpasse
@@ -94,23 +84,30 @@ sp { apply*process2
 # Only propose this operator in the substate
 
 sp {propose*Substate*breakImpasse
-   (state <s> ^impasse tie )
-   (<s> ^superstate S2)
+   (state <s> ^impasse tie)
+   (<s> ^item <o1>)
+   (<s> ^item <o2>)
+   (<o1> ^oper1 <val1>)
+   (<o2> ^oper2  <val2>)
 -->
-
    (<s> ^operator <o> + =)
-   (<o> ^name breakImpasse)
+   (<o> ^impasseoperator breakImpasse)
+   (<o> ^oper1  <val1>)
+   (<o> ^oper2  <val2>)
 }
 
 sp {apply*Substate*breakImpasse
    (state <s> ^operator <o>)
-   (<o> ^name breakImpasse)
-   
+   (<o> ^impasseoperator breakImpasse)
+   (<o> ^oper1 <val1>)
+   (<o> ^oper2 <val2>)   
+
    (<s> ^superstate <ss>)
-   (<ss> ^operator <o1> +)
-   
-   (<ss> ^operator <o2> +)
-   
+   (<ss> ^operator <o1> + )
+   (<o1> ^oper1 <val1>)
+
+   (<ss> ^operator <o2> + )
+   (<o2> ^oper2 <val2>)   
 -->
 
    (<ss> ^operator <o2> > <o1>)
