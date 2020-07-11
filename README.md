@@ -224,6 +224,7 @@ Using the cueID, you can describe what LTI you are trying to retrieve.
 * https://github.com/OptumTechUniversity
 * https://soar.eecs.umich.edu/workshop_registration/ 
 * SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
+* Videos of VISCA Talks : https://visca.engin.umich.edu/
 
 
 ### License
