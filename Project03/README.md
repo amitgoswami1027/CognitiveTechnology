@@ -148,4 +148,4 @@ sp {apply*Substate*breakImpasse
 ![image](https://user-images.githubusercontent.com/13011167/87226457-7226e200-c3b1-11ea-8ab5-a36e7350be2f.png)
 
 ### Final State of Program
-![image](https://user-images.githubusercontent.com/13011167/87226484-a9958e80-c3b1-11ea-9bb1-9d95308401b9.png)
+![image](https://user-images.githubusercontent.com/13011167/87226618-9cc56a80-c3b2-11ea-8f56-1ab11797c7f7.png)
