@@ -182,24 +182,40 @@ Whenever there is the Operator Tie and Soar cannot able to take the decision to 
 match during the application phase, or a new operator is not selected during the next decision phase.
 
 ## PROJECT04 - Notes for Reference
-### SEMANTIC MEMORY - SM is used for storing the long term knowledge and facts. e.g red id color, fire is hot and sky is blue. 
-* Before we begin, be sure to Enable the semantic memory as it is disabled by default. The Soar Data loader enables it automatically, but if you are using the stock debugger, run the following command: sem --set learning on
-* Semantic working memory cans store a series of multiple disconnected graphs. These graphs are not initially connected to WM.
-* Identifiers in the SM are reffered to as Long Term identifiers (LTI). These exisit only in the Semantic Memory.
-* How can we link this knowledge from the semantic memory? We can do this by linking one of the LTIs to a short term identifiers (STI) that exits in WM. 
-* In the WM graph - smem attribute exists which ultimately connects to the 'command' and 'result' attributes. 
-* The simplest way to add the semantic memory to soar is with a command in debugger.
+### Categorization of Human Memory
+#### 1. PROCEDURAL MEMORY ("Knowing how"): is the unconcious memory of skills and how to do the things, particularly the use of objects or movements of body ,such as tying a shoelace, playing the guitar or riding a bike. These memories are typically acquired through repetition and practice and are composed of automatic sensorimotor behaviors that are so deeply embedded that we are no longer aware of them. 
+#### 2. DECLARATIVE MEMORY ("knowing what"): is of two type: semantic and episodic. Semantic memory is recall of general facts while episodic memory is recall of personal facts. Remembering the capital of france and the rules for playing football uses semantic memory. Episodic memory represents our memory of experiences and specific events in time in a serial form, from which we can reconstruct the actual events that took place at any given point in our lives.
 
+![image](https://user-images.githubusercontent.com/13011167/87876444-c0f9fa80-c9f5-11ea-8b18-01f025a6641b.png)
+
+### SEMANTIC MEMORY - SM is used for storing the long term knowledge and facts. e.g red id color, fire is hot and sky is blue. It would be in-appropiate to store this in working memory , as this knowledge is always not necessary.
+
+* Before we begin, be sure to Enable the semantic memory as it is disabled by default. The Soar Data loader enables it automatically, but if you are using the stock debugger, run the following command: "sem --set learning on"
+
+#### How would you store this type of information - WORKING MEMORY CONENCTION.
+* Semantic working memory  store a series of multiple disconnected graphs. These graphs are not initially connected to WM.
+* SOAR construct the working memory out of the Identififers. Identifiers in the SM are reffered to as Long Term identifiers (LTI). These exisit only in the 
+  Semantic Memory.
+#### How are we able to retrieve this knowledge from Semantic memory?
+* How can we link this knowledge from the semantic memory? We can do this by linking one of the LTIs to a short term identifiers (STI) that exits in WM. 
+* In the WM graph - smem attribute exists which ultimately connects to the 'command'(command link is used to query the semantic memory. This link is updated in a 
+  specific way to ask the semantic memory for specific knowledge) and 'result'(The result link is used to retrieve the knowledge. Information on this link should 
+  not be modified or deleted) attributes. 
+* The simplest way to add the semantic memory to soar is with a command in debugger.
+#### STORING MEMORY : The simplest way to add Semantic memory to Soar is with a command in the debugger. The format above is relatively simple to follow, with new variables being created, and attribute/value and attribute/id pairs being used to create the graph. This information can also be stored in the .sem file within the Soar Data loader.
 ```STORING MEMORY
  smem --add{
  (<n1> ^name alice ^friend <n2>)
  (<n2>  ^name bob ^friend <n1> <n3>)
  (<n3> ^name charley) 
  
+ Another way to add objects to semantic memory is by utilizing the 'store' link. The following command can be placed in the 'action' section of a rule:
+ <s> ^sem.command.store <identifier>
+ 
  }
 ```
 * All of semantic memory storing occurs just before the output phase in the decision making cycle. 
-* RETRIEVING MEMORY - Retriving semanitc memory is also done with command link. The retrieved memory is stored on the result link. There are two ways to retriving memory. Cue and NON-Cue.
+#### RETRIEVING MEMORY - Retriving semanitc memory is also done with command link. The retrieved memory is stored on the result link. There are two ways to retriving memory. Cue and NON-Cue.
 * CUE - In cue retrievels, the agent searches for an LTI that matches the one supplied on the commandlink. 
 ```
 <s> ^smem.command.query <cueID>. 
@@ -208,8 +224,16 @@ Since this operations occurs at the end of decision making cycle, the results wi
 ```
 <s> ^smem.result.retrieve <cueID> . 
 ```
-Using the cueID, you can describe what LTI you are trying to retrieve. 
+Using the cueID, you can describe what LTI you are trying to retrieve.Cue retrievals are especially useful if you don't have any LTIs linked already.
+If multiple LTIs match, Soar picks the one that was most recently used. This can be modified to pick based on a variety of different vectors.
+
 * NON-CUE - Non-cue retrievels are done when you already have a STI in memory (which is linked to an LTI). 
+```
+<s> ^smem.command.retrieve <LTI>
+
+The result of this is stored at:
+<s> ^smem.command.retrieve <LTI>
+```
 
 ### EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables- PHASE: Controls which phase in the decison making process , storage take place at. TRIGGER: The result that concludes an episode. 
 * Episodic memory retrievel - Present-id displays the current iteration. The agent modifies the 'command' link and result, errors and metadata and returned on the 'result link. EM can be saved to your computer , so it can be loaded in if you need it. 
