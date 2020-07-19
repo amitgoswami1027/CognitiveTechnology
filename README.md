@@ -188,7 +188,7 @@ match during the application phase, or a new operator is not selected during the
 
 ![image](https://user-images.githubusercontent.com/13011167/87876444-c0f9fa80-c9f5-11ea-8b18-01f025a6641b.png)
 
-### SEMANTIC MEMORY - SM is used for storing the long term knowledge and facts. e.g red id color, fire is hot and sky is blue. It would be in-appropiate to store this in working memory , as this knowledge is always not necessary.
+### A. SEMANTIC MEMORY - SM is used for storing the long term knowledge and facts. e.g red id color, fire is hot and sky is blue. It would be in-appropiate to store this in working memory , as this knowledge is always not necessary.
 
 * Before we begin, be sure to Enable the semantic memory as it is disabled by default. The Soar Data loader enables it automatically, but if you are using the stock debugger, run the following command: "sem --set learning on"
 
@@ -235,9 +235,13 @@ The result of this is stored at:
 <s> ^smem.command.retrieve <LTI>
 ```
 
-### EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables- PHASE: Controls which phase in the decison making process , storage take place at. TRIGGER: The result that concludes an episode. 
+### B. EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables :
+* PHASE: Controls which phase in the decison making process, storage take place at. 
+* TRIGGER: The result that concludes an episode. 
 * Episodic memory retrievel - Present-id displays the current iteration. The agent modifies the 'command' link and result, errors and metadata and returned on the 'result link. EM can be saved to your computer , so it can be loaded in if you need it. 
 
+#### RETRIEVING THE EM
+* CUE Based Retrieval:  
 
 
 
