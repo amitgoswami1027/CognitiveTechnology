@@ -1,0 +1,23 @@
+#SEMANTIC MEMORY EXAMPLE
+
+sp {propose*orders
+   (state <s> ^type state)
+   (<s> -^init)
+--> 
+   (<s> ^operator <o> + !)
+   (<o> ^name name)
+}
+
+sp {apply*orders
+   (state <s> ^operator <o>)
+   (<o> ^name name)
+   (<s> ^smem.command <cmd>) #Link to the semantic memory
+--> 
+   (<ppl> ^type people)
+   (<ppl> ^name bob)
+   (<ppl> ^name jim)
+   (<ppl> ^name steve)
+   (<ppl> ^init true)
+   (<cmd> ^store <ppl>) #Store command
+}
+ 

@@ -1,0 +1,19 @@
+sp {propose*cue
+   (state <s> ^type state)
+   (<s> -^cue)
+--> 
+   (<s> ^operator <o> + =)
+   (<o> ^name cue)
+}
+
+sp{apply*cue
+  (state <s> ^operator <o>)
+  (<o> ^name cue)
+  (<s> ^smem.command <cmd>) #smem command link
+  (<cmd> ^store <lti>) #store link
+-->
+  (<cmd> ^store <lti> -) #Store link removal
+  (<s> ^cue true)
+  (<cmd> ^query.type people) #Query
+}
+

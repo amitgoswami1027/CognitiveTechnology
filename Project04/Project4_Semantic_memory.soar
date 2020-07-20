@@ -1,0 +1,9 @@
+smem --add{
+(<main> ^food <a1> <s2> <a3>)
+(<a1> ^type taco ^calories 200 ^mainTngredient <b1>)
+(<a2> ^type burger ^calories 400 ^mainIngredient <b2>)
+(<a3> ^tpe streak ^calories 300 ^mainIngredient <b3>)
+(<b1> ^ingredient shell)
+(<b2> ^ingredient party)
+(<b3> ^ingredient meat)
+}
