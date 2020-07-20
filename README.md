@@ -237,12 +237,43 @@ The result of this is stored at:
 
 ### B. EPISODIC MEMORY - Storage of EM is automatic. During storage, Soar automatically stores the top state along with the attributes and values that resides below it. This storage appends this informaiton, storing it alongside all past experiences. EM is stored is controlled with two variables :
 * PHASE: Controls which phase in the decison making process, storage take place at. 
-* TRIGGER: The result that concludes an episode. 
+* TRIGGER: The result that concludes an episode, adding the new augmentaiton to the output-link or each decision cycle.
 * Episodic memory retrievel - Present-id displays the current iteration. The agent modifies the 'command' link and result, errors and metadata and returned on the 'result link. EM can be saved to your computer , so it can be loaded in if you need it. 
+* FORCE Parameter: For Debugging purpose, the force parameter allows the user to manually request thaat an episode be recorded (or not) during the current decision cycle. BEehaviour is as follows:
+  * The value of the force parameter is initialized to off every decision cycle.
+  * During the phase of episodic storage, episodic memory tests the value of the force parameter; if it has a value other than of o, episodic memory follows the 
+    forced policy irrespective of the value of the trigger parameter.
+
+Upon creation of the new state in WM,architecture creates the following augmentations to facilitate agent interaction with episodic memory:
+```
+(<s> ^epmen <e>)
+(<e> ^command <e-c>)
+(<e> ^result <e-r>)
+(<e> ^present-id #)
+```
+As rules augment the command structure in order to retrieve episodes (7.3), episodic memory augments the result structure in response.The value of the present-id augmentation is an integer and will update to expose to the agent the current episode number. This information is identical to what is available via the time statistic.
 
 #### RETRIEVING THE EM
-* CUE Based Retrieval:  
+* CUE Based Retrieval:  With this we try to find the best match. We describe the top state using structures we want and structures we don't want. Use the following links of this:
 
+```
+<s> ^epmem.command.query <required-que>
+<s> ^epmem.command.neg-query <operational-negative-que>
+```
+The cue-based retrieval process can be thought of conceptually as a nearest-neighbor search.
+
+* Absolute Non-Cue: This is based of time. Each episode is given a time when it is stored. These episode can be retrieved by specifying a time:
+
+```
+<s> ^epmem.command.retrieve time
+```
+* Relative Non-Cue: After retrieving an episode, Soar stores the time linked to it. You can go to the next episode in time, or the previous using the commands:
+```
+<s> ^epmen.command.next <n>
+<s> ^epmen.command.previous <p>
+```
+
+#### EM is a record of an agent's stream of experiences. EM mechanism will automatically record episodes as a Soar agent executes. The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have noticed during the original experience and combined them with the original knowledge to improve the preformance of the future tasks.
 
 
 ### Important Links
