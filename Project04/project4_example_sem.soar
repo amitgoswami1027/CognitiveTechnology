@@ -17,7 +17,7 @@ sp {apply*orders
    (<ppl> ^name bob)
    (<ppl> ^name jim)
    (<ppl> ^name steve)
-   (<ppl> ^init true)
+   (<s> ^init true)
    (<cmd> ^store <ppl>) #Store command
 }
  
