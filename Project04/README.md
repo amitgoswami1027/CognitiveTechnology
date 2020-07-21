@@ -1,2 +1,2 @@
-## COGNITIVE TECHNOLOGY - Project03
+## COGNITIVE TECHNOLOGY - Project04 (Semantic & Episodic Memory)
 
