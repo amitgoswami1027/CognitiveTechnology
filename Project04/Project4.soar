@@ -1,11 +1,12 @@
 visualize image-type jpg
 visualize architectural-wmes on
 
-# SOAR COURSE PROJECT04 Submission
+# SOAR COURSE PROJECT04 Started 20th July,2020
 # AMIT GOSWAMI
 
+smem --set learning on
 
-sp {propose*init
+sp { propose*init
    (state <s> ^type state)
    (<s> -^init)
 -->
@@ -30,6 +31,159 @@ sp {apply*init
    (<fri> ^food banana)
    (<s> ^init true)
 } 
+
+sp { propose*mod
+   (state <s> ^smem.command <cmd>) 
+ #  (<s> ^operator.name cake)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+   (<food> ^banana 50)
+   (<food> ^soda 200)
+   (<food> ^chicken 300)
+-->
+   (<s> ^operator <op> + >)
+   (<op> ^name mod)
+}
+
+sp {apply*mod
+   (state <s> ^operator.name mod
+              ^smem.command <cmd>)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+   (<food> ^banana 50)
+   (<food> ^soda 200)
+   (<food> ^chicken 300)
+-->
+   (<cmd> ^store <food>)
+   (<food> ^type food -)
+   (<food> ^cake 500 )
+   (<food> ^banana 50 -)
+   (<food> ^soda 200 -)
+   (<food> ^chicken 300 -)
+   (<s> ^selected <abc>)
+   (<abc> ^cake 500)
+}
+
+sp {propose*cb-retrieval
+  (state <s> ^smem.command <cmd>)
+  (<cmd> ^retrieve)
+-->
+  (<s> ^operator <op> + =)
+  (<op> ^name cb-retrieval)
+}
+
+sp {apply*cb-retrieval
+   (state <s> ^operator <op>
+              ^smem.command <cmd>)
+   (<op> ^name cb-retrieval)
+   (<cmd> ^retrieve <lti>)
+-->
+   (<cmd> ^retrieve <lti> -
+          ^query <cue>)
+   (<cue> ^name <any-name>
+          ^type <lti>)
+}
+
+sp {done
+   (state <s> ^smem <smem>)
+   (<smem> ^command.query <q>
+           ^result.<status> <q>)
+-->
+   (halt)
+}
+
+
+sp { propose*soda
+   (state <s> ^type state)
+   (<s> ^fridge <fri>)
+   (<fri> ^food soda)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name soda)
+}
+
+sp { apply*soda
+   (state <s> ^operator <o>)
+   (<o> ^name soda)
+-->
+    ( write |Eating soda.... | )
+}
+
+#sp {propose*cake
+#   (state <s> ^type state)
+#   (<s> ^fridge <fri>)
+#   (<fri> ^food cake)
+#--> 
+#   (<s> ^operator <o> + >)
+#   (<o> ^name cake)
+#}
+
+#sp {apply*cake
+#    (state <s> ^operator <o>)
+#    (<o> ^name cake)
+#-->
+#   (write |Eating cake ....|)
+#}
+
+
+#sp {propose*banana
+#   (state <s> ^type state)
+#   ( <s> ^fridge <fri>)
+#   (<fri> ^food banana)
+#-->
+#   (<s> ^operator <o> + >)
+#   (<o> ^name banana)
+#}
+
+#sp { apply*banana
+#   (state <s> ^operator <o>)
+#   (<o> ^name banana)
+#-->
+#   (write |Eating Banana...|)
+#}
+
+#sp {elaborate*cb-retrivel
+#   (state <s> ^operator <op>
+#              ^smem.command <cmd>)
+ #  (<cmd> ^retrieve <lti>) 
+#-->
+ #  (<cmd> ^retrieve <lti> -)
+#   (<cmd> ^math-query.food.min <cue>)
+#   (<cue> ^name <amit>
+#          ^store <lti>)
+#   (<cmd> ^retrieve 1)
+#   (write |eureka...| <lti>)
+#}
+
+
+#Break impasses in the substate that is created, utilizing the Semantic Memory 
+#to pick the item with the lowest calorie count. 
+#Also be sure to remove and update <s> ^selected each time.
+
+#sp {propose*Substate*breakImpasse
+#   (state <s> ^impasse tie)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^impasseops breakImpasse)
+#}
+
+#sp { apply*Substate*breakImpasse
+#     (state <s> ^operator <o>)
+#     (<o> ^impasseops breakImpasse)
+     
+#     (<s> ^superstate <ss>)
+#     (<ss> ^operator <o> +)
+#     (<o> ^name <val1>)
+#-->
+#     (<ss> ^operator <lti> > )
+#     (write |amit| <lti>)
+#}
+
+
+	
+
 
 
 
