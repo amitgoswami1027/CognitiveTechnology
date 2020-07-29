@@ -9,7 +9,8 @@ smem --set learning on
 sp { propose*init
    (state <s> ^type state)
    (<s> ^superstate nil)
-   (<s> -^init)
+   (<s> -^init) 
+   (<s> -^selected)
 -->
    (<s> ^operator <o> + !)
    (<o> ^name init)
@@ -31,11 +32,12 @@ sp {apply*init
    (<fri> ^food cake)
    (<fri> ^food banana)
    (<s> ^init true)
+   (<s> ^selected blank)
 } 
 
 sp { propose*cake
    (state <s> ^smem.command <cmd>)
- # (<s> ^selected <setval>) 
+   (<s> ^selected <setval>) 
    (<cmd> ^store <food>)
    (<s> ^fridge <fri>)
    (<fri> ^food cake)
@@ -60,7 +62,7 @@ sp {apply*cake
  #  (<food> ^banana 50)
  #  (<food> ^soda 200)
    (<food> ^chicken 300)
-#   (<s> ^selected <selval>)
+   (<s> ^selected <selval>)
 -->
    (<food> ^cake 500 -)
    (<food> ^banana 50 -)
@@ -74,7 +76,7 @@ sp {apply*cake
 
 sp { propose*soda
    (state <s> ^smem.command <cmd>)
- #  (<s> ^selected <setval>)
+   (<s> ^selected <setval>)
    (<s> ^fridge <fri>)
    (<fri> ^food soda)
    (<cmd> ^store <food>)
@@ -99,7 +101,7 @@ sp {apply*soda
  #  (<food> ^banana 50)
    (<food> ^soda 200)
    (<food> ^chicken 300)
- #  (<s> ^selected <selval>)
+   (<s> ^selected <selval>)
 -->
    (<food> ^cake 500 )
    (<food> ^banana 50 -)
@@ -113,7 +115,7 @@ sp {apply*soda
 
 sp { propose*banana
    (state <s> ^smem.command <cmd>)
- #  (<s> ^selected <setval>)
+   (<s> ^selected <setval>)
    (<s> ^fridge <fri>)
    (<fri> ^food banana)
    (<cmd> ^store <food>)
@@ -138,7 +140,7 @@ sp {apply*banana
    (<food> ^banana 50)
    (<food> ^soda 200)
    (<food> ^chicken 300)
- #  (<s> ^selected <selval>) 
+   (<s> ^selected <selval>) 
 -->
    (<food> ^cake 500 )
    (<food> ^banana 50 -) 
