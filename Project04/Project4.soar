@@ -8,6 +8,7 @@ smem --set learning on
 
 sp { propose*init
    (state <s> ^type state)
+   (<s> ^superstate nil)
    (<s> -^init)
 -->
    (<s> ^operator <o> + !)
@@ -32,122 +33,127 @@ sp {apply*init
    (<s> ^init true)
 } 
 
-sp { propose*mod
-   (state <s> ^smem.command <cmd>) 
- #  (<s> ^operator.name cake)
+sp { propose*cake
+   (state <s> ^smem.command <cmd>)
+ # (<s> ^selected <setval>) 
    (<cmd> ^store <food>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food cake)
    (<food> ^type food)
    (<food> ^cake 500)
-   (<food> ^banana 50)
-   (<food> ^soda 200)
+#  (<food> ^banana 50)
+#  (<food> ^soda 200)
    (<food> ^chicken 300)
 -->
    (<s> ^operator <op> + >)
-   (<op> ^name mod)
+   (<op> ^namec cake)
 }
 
-sp {apply*mod
-   (state <s> ^operator.name mod
+sp {apply*cake
+   (state <s> ^operator.namec cake
               ^smem.command <cmd>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food cake)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+ #  (<food> ^banana 50)
+ #  (<food> ^soda 200)
+   (<food> ^chicken 300)
+#   (<s> ^selected <selval>)
+-->
+   (<food> ^cake 500 -)
+   (<food> ^banana 50 -)
+   (<food> ^soda 200 -)
+   (<food> ^chicken 300 )
+   (<s> ^selected <selval> -)
+   (<s> ^selected cake)
+   (<fri> ^food cake - )
+   (write |Eating cake..|)
+}
+
+sp { propose*soda
+   (state <s> ^smem.command <cmd>)
+ #  (<s> ^selected <setval>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food soda)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+ #  (<food> ^banana 50)
+   (<food> ^soda 200)
+   (<food> ^chicken 300)
+-->
+   (<s> ^operator <op> + > )
+   (<op> ^names soda)
+}
+
+sp {apply*soda
+   (state <s> ^operator.names soda
+              ^smem.command <cmd>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food soda)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+ #  (<food> ^banana 50)
+   (<food> ^soda 200)
+   (<food> ^chicken 300)
+ #  (<s> ^selected <selval>)
+-->
+   (<food> ^cake 500 )
+   (<food> ^banana 50 -)
+   (<food> ^soda 200 -)
+   (<food> ^chicken 300 )
+   (<s> ^selected <selval> -)
+   (<s> ^selected soda)
+   (<fri> ^food soda - )
+   (write |Drinking soda..|)
+}
+
+sp { propose*banana
+   (state <s> ^smem.command <cmd>)
+ #  (<s> ^selected <setval>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food banana)
+   (<cmd> ^store <food>)
+   (<food> ^type food)
+   (<food> ^cake 500)
+   (<food> ^banana 50)
+   (<food> ^soda 200)
+   (<food> ^chicken 300) 
+-->
+   (<s> ^operator <op> + > )
+   (<op> ^nameb banana)
+}
+   
+sp {apply*banana
+   (state <s> ^operator.nameb banana
+              ^smem.command <cmd>)
+   (<s> ^fridge <fri>)
+   (<fri> ^food banana)
    (<cmd> ^store <food>)
    (<food> ^type food)
    (<food> ^cake 500)
    (<food> ^banana 50)
    (<food> ^soda 200)
    (<food> ^chicken 300)
+ #  (<s> ^selected <selval>) 
 -->
-   (<cmd> ^store <food>)
-   (<food> ^type food -)
    (<food> ^cake 500 )
-   (<food> ^banana 50 -)
-   (<food> ^soda 200 -)
-   (<food> ^chicken 300 -)
-   (<s> ^selected <abc>)
-   (<abc> ^cake 500)
-}
-
-sp {propose*cb-retrieval
-  (state <s> ^smem.command <cmd>)
-  (<cmd> ^retrieve)
--->
-  (<s> ^operator <op> + =)
-  (<op> ^name cb-retrieval)
-}
-
-sp {apply*cb-retrieval
-   (state <s> ^operator <op>
-              ^smem.command <cmd>)
-   (<op> ^name cb-retrieval)
-   (<cmd> ^retrieve <lti>)
--->
-   (<cmd> ^retrieve <lti> -
-          ^query <cue>)
-   (<cue> ^name <any-name>
-          ^type <lti>)
-}
-
-sp {done
-   (state <s> ^smem <smem>)
-   (<smem> ^command.query <q>
-           ^result.<status> <q>)
--->
-   (halt)
-}
-
-
-sp { propose*soda
-   (state <s> ^type state)
-   (<s> ^fridge <fri>)
-   (<fri> ^food soda)
--->
-   (<s> ^operator <o> + =)
-   (<o> ^name soda)
-}
-
-sp { apply*soda
-   (state <s> ^operator <o>)
-   (<o> ^name soda)
--->
-    ( write |Eating soda.... | )
-}
-
-#sp {propose*cake
-#   (state <s> ^type state)
-#   (<s> ^fridge <fri>)
-#   (<fri> ^food cake)
-#--> 
-#   (<s> ^operator <o> + >)
-#   (<o> ^name cake)
-#}
-
-#sp {apply*cake
-#    (state <s> ^operator <o>)
-#    (<o> ^name cake)
-#-->
-#   (write |Eating cake ....|)
-#}
-
-
-#sp {propose*banana
-#   (state <s> ^type state)
-#   ( <s> ^fridge <fri>)
-#   (<fri> ^food banana)
-#-->
-#   (<s> ^operator <o> + >)
-#   (<o> ^name banana)
-#}
-
-#sp { apply*banana
-#   (state <s> ^operator <o>)
-#   (<o> ^name banana)
-#-->
-#   (write |Eating Banana...|)
-#}
+   (<food> ^banana 50 -) 
+   (<food> ^soda 200 )
+   (<food> ^chicken 300 )
+   (<s> ^selected <selval> -)
+   (<s> ^selected banana)
+   (<fri> ^food banana - )
+   (write |Eating banana..|)
+}  
 
 #sp {elaborate*cb-retrivel
 #   (state <s> ^operator <op>
 #              ^smem.command <cmd>)
- #  (<cmd> ^retrieve <lti>) 
+#  (<cmd> ^retrieve <lti>) 
 #-->
  #  (<cmd> ^retrieve <lti> -)
 #   (<cmd> ^math-query.food.min <cue>)
@@ -157,29 +163,109 @@ sp { apply*soda
 #   (write |eureka...| <lti>)
 #}
 
+#sp {propose*cue
+#   (state <s> ^type state)
+#   (<s> -^cue)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^name cue)
+#}
+
+#sp {apply*cue
+#  (state <s> ^operator <o>)
+#  (<o> ^name cue)
+#  (<s> ^smem.command <cmd>) #smem command link
+#  (<cmd> ^store <lti>) #store link
+#  (<s> ^fridge <fri>)
+#-->
+#  (<cmd> ^store <lti> -) #Store link removal
+#  (<s> ^cue true)
+#  (<cmd> ^query.type food)
+  #(<s> ^fridge <fri> -)
+
+#}
+
+
+
+
 
 #Break impasses in the substate that is created, utilizing the Semantic Memory 
 #to pick the item with the lowest calorie count. 
 #Also be sure to remove and update <s> ^selected each time.
 
-#sp {propose*Substate*breakImpasse
-#   (state <s> ^impasse tie)
-#-->
-#   (<s> ^operator <o> + =)
-#   (<o> ^impasseops breakImpasse)
-#}
+sp {propose*Substate*breakImpasse1
+   (state <s> ^impasse tie)
+   (<s> ^item <o1>)
+   (<s> ^item <o2>)
+   (<s> ^item <o3>)
+   (<o1> ^namec <val1>)
+   (<o2> ^names <val2>)
+   (<o3> ^nameb <val3>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^impasseops breakImpasse1)
+   (<o> ^namec <val1>)
+   (<o> ^names <val2>)
+   (<o> ^nameb <val3>)
+}
 
-#sp { apply*Substate*breakImpasse
-#     (state <s> ^operator <o>)
-#     (<o> ^impasseops breakImpasse)
+sp { apply*Substate*breakImpasse1
+     (state <s> ^operator <o>)
+     (<o> ^impasseops breakImpasse1)
+     (<o> ^namec <val1>)
+     (<o> ^names <val2>)
+     (<o> ^nameb <val3>)      
      
-#     (<s> ^superstate <ss>)
-#     (<ss> ^operator <o> +)
-#     (<o> ^name <val1>)
-#-->
-#     (<ss> ^operator <lti> > )
-#     (write |amit| <lti>)
-#}
+     (<s> ^superstate <ss>)
+     (<ss> ^operator <o1> +)
+     (<o1> ^namec <val1>)
+
+     (<ss> ^operator <o2> +)
+     (<o2> ^names <val2>)
+
+     (<ss> ^operator <o3> +)
+     (<o3> ^nameb  <val3>)
+-->
+      (<ss> ^operator <o3> > <o2> > <o1> )
+}
+
+#Break impasses in the substate that is created, utilizing the Semantic Memory
+#to pick the item with the lowest calorie count.
+#Also be sure to remove and update <s> ^selected each time.
+
+sp {propose*Substate*breakImpassetwo
+   (state <s> ^impasse tie)
+  # (<s> ^superstate S1)
+   (<s> ^item <o2>)
+   (<s> ^item <o3>)
+   (<s> ^item-count 2)
+#   (state <s> ^superstate nil)
+#   (<s> ^operator <o>)
+   (<o2> ^namec <val1>)
+   (<o3> ^names <val2>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^impasseops breakImpasse2)
+   (<o> ^namec <val1>)
+   (<o> ^names <val2>)
+}
+
+sp { apply*Substate*breakImpassetwo
+     (state <s> ^operator <o>)
+     (<o> ^impasseops breakImpasse2)
+     (<o> ^namec <val1>)
+     (<o> ^names <val2>)
+
+     (<s> ^superstate <ss>)
+     (<ss> ^operator <o2> +)
+     (<o2> ^namec <val1>)
+
+     (<ss> ^operator <o3> +)
+     (<o3> ^names <val2>)
+
+-->
+      (<ss> ^operator <o3> > <o2> )
+}
 
 
 	
