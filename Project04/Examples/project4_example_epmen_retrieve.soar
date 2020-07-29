@@ -1,0 +1,15 @@
+sp {propose*retrieve
+   (state <s> ^type state)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name retrieve)
+}
+
+sp {apply*retrieve
+   (state <s> ^operator <o>)
+   (<o> ^name retrieve)
+   (<s> ^epmem.command <cmd>)
+-->
+  (<cmd> ^retrieve 1)
+}
+
