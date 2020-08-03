@@ -1,0 +1,76 @@
+##!
+# @file
+#
+# @created sbhagwa3 20200709
+visualize image-type jpg
+visualize architectural-wmes on
+
+smem --set learning on
+epmem --set learning on  #RY: Turn on episodic memory
+
+#initialize semantic memory and working memory with data
+sp { propose*init
+   (state <s> ^type state)
+   (<s> -^init) 
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name init)
+    }
+
+sp { apply*init
+   (state <s> ^operator <o>)
+   (<o> ^name init)
+   (<s> ^smem.command <cmd>) 
+-->
+    (<s> ^init true)
+    (<food> ^type food)
+    (<food> ^cake 500)
+    (<food> ^banana 50)
+    (<food> ^soda 200)
+    (<food> ^chicken 300)
+    (<cmd> ^store <food>)
+    (<s> ^fridge <fri>)
+    (<fri> ^food soda)
+    (<fri> ^food banana)
+    (<fri> ^food cake)
+    }
+
+# RY: Query memory
+sp { propose*smem*cue
+    (state <s> ^type state)
+    (<s> -^cue)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name cue)
+    }
+
+sp { apply*smem*cue
+    (state <s> ^operator <o>)
+    (<o> ^name cue)
+    (<s> ^smem.command <cmd>)
+    (<cmd> ^store <lti>)
+-->
+    (<cmd> ^store <lti> -)
+    (<s> ^cue true)
+    (<cmd> ^query.type food)
+    }
+
+# RY: Retrieve memory
+sp { propose*smem*retrieve
+    (state <s> ^type state)
+    (<s> ^cue)
+    (<s> -^retrieve)
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name retrieve)
+    }
+
+sp { apply*smem*retrieve
+    (state <s> ^operator <o>)
+    (<o> ^name retrieve)
+    (<s> ^smem.result <rslt>)
+    (<rslt> ^retrieved <rtr>)
+-->
+    (<s> ^retrieve true)
+}
+    
