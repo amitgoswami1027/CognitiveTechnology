@@ -1,0 +1,160 @@
+##!
+# @file
+#
+# @created ryerex 20191003
+smem --set learning on
+epmem --set learning on
+
+sp {propose*init
+    (state <s> ^type state)
+    (<s> -^init)
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name init)
+}
+ 
+sp {apply*init
+    (state <s> ^operator <o>)
+    (<o> ^name init)
+    (<s> ^smem.command <cmd>)
+-->
+    (<food> ^type food)
+    (<food> ^cake 500)
+    (<food> ^banana 50)
+    (<food> ^soda 200)
+    (<food> ^chicken 300)
+    (<s> ^init true)
+    (<cmd> ^store <food>)
+    (<s> ^fridge <fri>)
+    (<fri> ^food soda)
+    (<fri> ^food cake)
+    (<fri> ^food banana)
+    (<s> ^selected <consumed>)
+    (<s> ^num_eaten 0)
+}
+
+sp {propose*cue
+    (state <s> ^type state)
+    (<s> -^cue)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name cue)
+}
+ 
+sp {apply*cue
+    (state <s> ^operator <o>)
+    (<o> ^name cue)
+    (<s> ^smem.command <cmd>) #Smem command link
+    (<cmd> ^store <lti>) #Store link
+-->
+    (<cmd> ^store <lti> -) #Store link removal
+    (<s> ^cue true)
+    (<cmd> ^query.type food) #Query
+}
+
+sp {propose*retrieve
+    (state <s> ^type state)
+    (<s> ^cue)
+    (<s> -^retrieve)
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name retrieve)
+    }
+
+sp {apply*retrieve
+    (state <s> ^operator <o>)
+    (<o> ^name retrieve)
+    (<s> ^smem.result <rslt>)
+    (<rslt> ^retrieved <rtr>)
+-->
+    (<s> ^retrieve true)
+}
+
+sp {propose*eat_item
+    (state <s> ^type state)
+    (<s> ^retrieve)
+    (<s> ^fridge.food <food>)
+    -(<s> ^selected.food <food>)
+    (<s> ^smem.result <rslt>)
+    (<rslt> ^retrieved <rtr>)
+    (<rtr> ^<food> <calories>)
+-->
+    (<s> ^operator <o> + >)
+    (<o> ^name eat_item)
+    (<o> ^proposed_food <food>)
+    (<o> ^calories <calories>)
+}
+
+sp {apply*eat_item
+    (state <s> ^operator <o>)
+    (<o> ^name eat_item)
+    (<o> ^proposed_food <food>)
+    (<o> ^calories <calories>)
+    (<s> ^selected <sel>)
+-->
+    (<sel> ^food <food>)
+    (write (crlf) |I ate/drank | <food> | which contained | <calories> | calories|)
+}
+
+sp {propose*inspect_calories
+    (state <s> ^impasse tie)
+    (<s> ^item <o1>)
+    (<s> ^item <o2>)
+    (<o1> ^name eat_item ^calories <calories_1>)
+    (<o2> ^name eat_item ^calories <calories_2> > <calories_1>)
+    (<s> ^superstate <ss>)
+-->
+    (<ss> ^operator <o1> > <o2>)
+}
+
+sp {elaborate*fridge
+    (state <s> ^fridge <fridge>)
+    (<fridge> ^food)
+-->
+    (<s> ^foodcnt (size <fridge>))
+}
+
+sp {elaborate*eaten
+    (state <s> ^selected <eaten>)
+    (<eaten> ^food)
+-->
+    (<s> ^eatencnt (-(size <eaten>)1)-)
+    (<s> ^eatencnt (size <eaten>))
+}
+
+sp {elaborate*count
+    (state <s> ^foodcnt <foodcnt>)
+    (<s> ^eatencnt <eatencnt>)
+-->
+    (write (crlf) |there are |<foodcnt>| items in the fridge and I have eaten |<eatencnt>| of them|)
+    } 
+
+sp {propose*retrieveFirst
+    (state <s> ^foodcnt <foodcnt>)
+    (<s> ^eatencnt <eatencnt> = <foodcnt>)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name retrieveFirst)
+    (write (crlf) |retrieved EP, num eaten = |<eatencnt>| num in fridge |<foodcnt>)
+}
+ 
+sp {apply*retrieveFirst
+    (state <s> ^operator <o>)
+    (<o> ^name retrieveFirst)
+    (<s> ^epmem.command <cmd>)
+-->
+    (<s> ^retrieveFirst true)
+    (<cmd> ^retrieve 5)
+    (write (crlf) |applying retrieve|)
+}
+
+sp {detect*goal
+    (state <s> ^type state)
+    (<s> ^retrieveFirst)
+    (<s> ^epmem.result <rslt>)
+    (<rslt> ^retrieved <rtr>)
+    (<rtr> ^selected.food <food>)
+-->
+    (write (crlf) |The first food I consumed was a | <food>)
+    (halt)
+}
