@@ -273,7 +273,15 @@ The cue-based retrieval process can be thought of conceptually as a nearest-neig
 <s> ^epmen.command.previous <p>
 ```
 
-#### EM is a record of an agent's stream of experiences. EM mechanism will automatically record episodes as a Soar agent executes. The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have noticed during the original experience and combined them with the original knowledge to improve the preformance of the future tasks.
+#### EM is a record of an agent's stream of experiences. EM mechanism will automatically record episodes as a Soar agent executes. The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have noticed during the original experience and combined them with the original knowledge to improve the preformance of the future tasks. 
+
+
+## PROJECT05 - Reinforcement Learning
+#### Reinforcement Learning Goal: Learn an optimal action policy; given an environemnt that provides states, affords actions and provides feedback as numerical rewards, maximize the expected futrue reward. For implementing RL, you have two responsibilities: RL rules and reward updates :
+
+#### RL RULES : For every state-action pair, there must exist an RL rule. These rules allow Soar to tune and provide feedback for each set of actions in your environment. These rules are run after an operator has been selected (decision phase). For these rules to exist as 'RL Rules', there are very specific specifications that must be met:
+* 1. The must test for a proposed operator 
+* 2. Only one action, creating a single indifferent preference (numeric constant) on the operator
 
 
 ### Important Links
