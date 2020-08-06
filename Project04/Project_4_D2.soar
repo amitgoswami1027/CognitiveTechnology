@@ -2,6 +2,9 @@
 # @file
 #
 # @created ryerex 20191003
+visualize image-type jpg
+visualize architectural-wmes on
+
 smem --set learning on
 epmem --set learning on
 
