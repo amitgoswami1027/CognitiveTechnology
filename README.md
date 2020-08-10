@@ -277,11 +277,23 @@ The cue-based retrieval process can be thought of conceptually as a nearest-neig
 
 
 ## PROJECT05 - Reinforcement Learning
-#### Reinforcement Learning Goal: Learn an optimal action policy; given an environemnt that provides states, affords actions and provides feedback as numerical rewards, maximize the expected futrue reward. For implementing RL, you have two responsibilities: RL rules and reward updates :
+#### Reinforcement Learning Goal: Learn an optimal action policy; given an environemnt that provides states, affords actions and provides feedback as numerical rewards, maximize the expected futrue reward. Soar RL mechanism learns Q-values for state operator pairs. Q-values are stored as numeric indifferent preferences created by specially productions called "RL Rules". 
 
-#### RL RULES : For every state-action pair, there must exist an RL rule. These rules allow Soar to tune and provide feedback for each set of actions in your environment. These rules are run after an operator has been selected (decision phase). For these rules to exist as 'RL Rules', there are very specific specifications that must be met:
-* 1. The must test for a proposed operator 
-* 2. Only one action, creating a single indifferent preference (numeric constant) on the operator
+#### RL RULES : RL rules are identied by syntax. A production is a RL rule if and only if its left hand side tests for a proposed operator, its right hand side creates a single numeric-indifferent preference, and it is not a template rule. We define an RL operator as an operator with numeric-indiferent preferences created by RL rules.
+
+```
+sp {rl*3*12*left
+   (state <s> ^name task-name
+              ^x 3
+              ^y 12
+              ^operator <o> +)
+   (<o> ^name move
+        ^direction left)
+   -->
+    (<s> ^operator <o> = 1.5)
+  }
+
+```
 
 
 ### Important Links
