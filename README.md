@@ -273,8 +273,143 @@ The cue-based retrieval process can be thought of conceptually as a nearest-neig
 <s> ^epmen.command.previous <p>
 ```
 
-#### EM is a record of an agent's stream of experiences. EM mechanism will automatically record episodes as a Soar agent executes. The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have noticed during the original experience and combined them with the original knowledge to improve the preformance of the future tasks.
+#### EM is a record of an agent's stream of experiences. EM mechanism will automatically record episodes as a Soar agent executes. The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have noticed during the original experience and combined them with the original knowledge to improve the preformance of the future tasks. 
 
+
+## PROJECT05 - Reinforcement Learning
+#### Reinforcement Learning Goal: Learn an optimal action policy; given an environemnt that provides states, affords actions and provides feedback as numerical rewards, maximize the expected futrue reward. Soar RL mechanism learns Q-values for state operator pairs. Q-values are stored as numeric indifferent preferences created by specially productions called "RL Rules". 
+
+#### Type of Operator Preferences: First, acceptability (+): only acceptable operators are considered for application. Acceptable preferences must be further described as either relatively differentiated or indifferent.
+* Differentiated: Differentiated preferences (such as > and <) establish a relative ordering from which Soar will choose the most preferred operator.
+* Indifferent: If all preferences are labeled as indifferent (=), Soar’s random operator choice can be further affected by numerical indifferent parameters.
+
+#### RL RULES : RL rules are identied by syntax. A production is a RL rule if and only if its left hand side tests for a proposed operator, its right hand side creates a single numeric-indifferent preference, and it is not a template rule. We define an RL operator as an operator with numeric-indiferent preferences created by RL rules.
+
+```
+#RL Need to be enabled before running the agent.
+#rl -s learning on
+
+sp {rl*3*12*left
+   (state <s> ^name task-name
+              ^x 3
+              ^y 12
+              ^operator <o> +)
+   (<o> ^name move
+        ^direction left)
+   -->
+    (<s> ^operator <o> = 1.5)
+  }
+
+```
+#### Reqard Update Rules: Reward update rules are written as elaboration rules that change the reward link. By adding a 'reward.link' value, Soar will be able to determine whether the decision it has been is positive or negative. It is usually best to write these rules as elaboration rules (i-supported instead of o-supported).
+
+#### CHUNKING : Chunking is an automatic process in Soar where rules are generated based on the knowledge obtained. When Soar is stuck when deciding, a substate is created. Once the impasse is resolved, the knowledge used to resolve it is lost. Chunking allow Soar to generate rules to 'remember' the knowledge used to resolve the impasse. Therefore, it is important to make decisions in substates, as it allows Soar to learn information.
+* Chunking is SOAR's experience based mechanism for learning new procedural knowledge. Chunking utilizes SOAR's impasse driven model for problem decomposition into 
+sub-goals to create new productions dynamically during task execution. These new Prodcutions are called CHUNKs, summarize the substate problem solving that 
+occuered which led to new knowledge in a superstate. When new rule fires and creates such new superstate knowledge , which is called RESULTS. SOAR learns the new 
+rule and immediately add to the production memory. In future similar situations, the new chunk will fire and create the appropriate results in a
+single step, which eliminates the need to spawn another subgoal to perform similar problemsolving. In other words, rather than contemplating and figuring out what to do, the agent immediately knows what to do.
+* CHUNKING can affect both speed-up and transfer learning. A chunk can effect speed-up learning because it compresses all of the problem-solving needed to produce 
+result into a single step. For some real-world agents, hundreds of rule firings can be compressed into a single rule firing. 
+* Chunks are created whenever one subgoal creates a result in a superstate; since most Soarprograms are continuously sub-goaling and returning results to higher-
+level states, chunks are typically created continuously as Soar runs. Note that Soar builds the chunk as soon as the result is created, rather than waiting until 
+the impasse is resolved.
+
+```
+
+#Reinforcement Learning Example. Agent move right-left. Moving right is preferrent over moving left.
+#Moiving right will have a much higher rewars. 
+# Goals would be to taing the agent to move right.
+#RL Need to be enabled before running the agent.
+rl -s learning on
+
+# Initialization Code
+
+sp{ propose*initialize-left-right
+    (state <s> ^superstate nil)
+               -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-left-right)
+}
+
+sp { apply*initalixe-left-right
+     (state <s> ^operator <op>)
+     (<op> ^name initialize-left-right)
+--> 
+     (<s> ^name left-right
+          ^direction <d1> <d2>
+          ^location start)
+     (<d1> ^name left ^reward -1)
+     (<d2> ^name right ^reward 1)
+ }
+ 
+ #Adding Agent Propose & Apply rules
+ 
+sp { left-right*propose*move
+     (state <s> ^name left-right
+                ^direction <d>
+                ^location start)
+     (<d> ^name <dir>)
+--> 
+     (<s> ^operator <op> +)
+     (<op> ^name move
+           ^dir <dir>)
+}
+
+sp {apply*move
+   (state <s> ^operator <op>
+              ^location start)
+   (<op> ^name move
+         ^dir <dir>)
+-->
+   (<s> ^location start - <dir>)
+   (write (clrf) |Moved:| <dir>)
+}
+
+sp { elaborate*done
+   (state <s> ^name left-right
+              ^location {<> start})
+-->
+   (halt)
+}
+
+## Add two RL Rules , which allow us to capture all of state/action pairs. These rules will test for operators and then apply and ind.
+
+sp { left-right*rl*left
+   (state <s> ^name left-right
+              ^operator <op> +)
+   (<op> ^name move 
+         ^dir left)
+--> 
+   (<s> ^operator <op> = 0)
+ }
+ 
+ sp {left-right*rl*right
+    (state <s> ^name left-right
+               ^operator <op> +)
+    (<op> ^name move
+          ^dir right)
+-->
+    (<s> ^operator <op> = 0)
+ }
+ 
+ ## Finally we need rules for REWARD. After selecting an action, this rule will fetch the reward based on the choice and store it on the reward link. This reward 
+ ## will influence the indifferent preferences we created earlier.
+ 
+ sp { elaborate*reward
+    (state <s> ^name left-right
+               ^reward-link <r>
+               ^location <d-name>
+               ^direction <dir>)
+    (<dir> ^name <d-name> ^reward <d-reward>)
+-->
+    (<r> ^reward <rr>)
+    (<rr> ^value <d-reward>)
+ }
+
+
+```
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
