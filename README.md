@@ -279,9 +279,16 @@ The cue-based retrieval process can be thought of conceptually as a nearest-neig
 ## PROJECT05 - Reinforcement Learning
 #### Reinforcement Learning Goal: Learn an optimal action policy; given an environemnt that provides states, affords actions and provides feedback as numerical rewards, maximize the expected futrue reward. Soar RL mechanism learns Q-values for state operator pairs. Q-values are stored as numeric indifferent preferences created by specially productions called "RL Rules". 
 
+#### Type of Operator Preferences: First, acceptability (+): only acceptable operators are considered for application. Acceptable preferences must be further described as either relatively differentiated or indifferent.
+* Differentiated: Differentiated preferences (such as > and <) establish a relative ordering from which Soar will choose the most preferred operator.
+* Indifferent: If all preferences are labeled as indifferent (=), Soar’s random operator choice can be further affected by numerical indifferent parameters.
+
 #### RL RULES : RL rules are identied by syntax. A production is a RL rule if and only if its left hand side tests for a proposed operator, its right hand side creates a single numeric-indifferent preference, and it is not a template rule. We define an RL operator as an operator with numeric-indiferent preferences created by RL rules.
 
 ```
+#RL Need to be enabled before running the agent.
+#rl -s learning on
+
 sp {rl*3*12*left
    (state <s> ^name task-name
               ^x 3
@@ -293,16 +300,53 @@ sp {rl*3*12*left
     (<s> ^operator <o> = 1.5)
   }
 
+```
+#### Reqard Update Rules: Reward update rules are written as elaboration rules that change the reward link (<s> ^reward-link). By adding a 'reward.link' value, Soar will be able to determine whether the decision it has been is positive or negative. It is usually best to write these rules as elaboration rules (i-supported instead of o-supported).
 
+#### CHUNKING : Chunking is an automatic process in Soar where rules are generated based on the knowledge obtained. When Soar is stuck when deciding, a substate is created. Once the impasse is resolved, the knowledge used to resolve it is lost. Chunking allow Soar to generate rules to 'remember' the knowledge used to resolve the impasse. Therefore, it is important to make decisions in substates, as it allows Soar to learn information.
+* Chunking is SOAR's experience based mechanism for learning new procedural knowledge. Chunking utilizes SOAR's impasse driven model for problem decomposition into 
+sub-goals to create new productions dynamically during task execution. These new Prodcutions are called CHUNKs, summarize the substate problem solving that 
+occuered which led to new knowledge in a superstate. When new rule fires and creates such new superstate knowledge , which is called RESULTS. SOAR learns the new 
+rule and immediately add to the production memory. In future similar situations, the new chunk will re and create the appropriate results in a
+single step, which eliminates the need to spawn another subgoal to perform similar problemsolving. In other words, rather than contemplating and guring out what to do, the agent immediately knows what to do.
+* CHUNKING can affect both speed-up and transfer learning. A chunk can eect speed-up learning because it compresses all of the problem-solving needed to produce a 
+result into a single step. For some real-world agents, hundreds of rule rings can be compressed into a single rule firing. 
+* Chunks are created whenever one subgoal creates a result in a superstate; since most Soarprograms are continuously sub-goaling and returning results to higher-
+level states, chunks are typically created continuously as Soar runs. Note that Soar builds the chunk as soon as the result is created, rather than waiting until 
+the impasse is resolved.
 
+```
+#Reinforcement Learning Example. Agent move right-left. Moving right is preferrent over moving left.
+#Moiving right will have a much higher rewars. 
+# Goals would be to taing the agent to move right.
 
+# Initialization Code
 
+sp{ propose*initialize-left-right
+    (state <s> ^superstate nil)
+               -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-left-right)
+}
+
+sp { apply*initalixe-left-right
+     (state <s> ^operator <op>)
+     (<op> ^name initialize-left-right)
+--> 
+     (<s> ^name left-right
+          ^direction <d1> <d2>
+          ^location start)
+     (<d1> ^name left ^reward -1)
+     (<d2> ^name right ^reward 1)
+ }
+ 
+ #Adding Agent Propose & Apply rules
+ 
 
 
 
 ```
-
-
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
