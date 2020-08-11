@@ -319,6 +319,8 @@ the impasse is resolved.
 #Reinforcement Learning Example. Agent move right-left. Moving right is preferrent over moving left.
 #Moiving right will have a much higher rewars. 
 # Goals would be to taing the agent to move right.
+#RL Need to be enabled before running the agent.
+rl -s learning on
 
 # Initialization Code
 
@@ -343,7 +345,67 @@ sp { apply*initalixe-left-right
  
  #Adding Agent Propose & Apply rules
  
+sp { left-right*propose*move
+     (state <s> ^name left-right
+                ^direction <d>
+                ^location start)
+     (<d> ^name <dir>)
+--> 
+     (<s> ^operator <op> +)
+     (<op> ^name move
+           ^dir <dir>)
+}
 
+sp {apply*move
+   (state <s> ^operator <op>
+              ^location start)
+   (<op> ^name move
+         ^dir <dir>)
+-->
+   (<s> ^location start - <dir>)
+   (write (clrf) |Moved:| <dir>)
+}
+
+sp { elaborate*done
+   (state <s> ^name left-right
+              ^location {<> start})
+-->
+   (halt)
+}
+
+## Add two RL Rules , which allow us to capture all of state/action pairs. These rules will test for operators and then apply and ind.
+
+sp { left-right*rl*left
+   (state <s> ^name left-right
+              ^operator <op> +)
+   (<op> ^name move 
+         ^dir left)
+--> 
+   (<s> ^operator <op> = 0)
+ }
+ 
+ sp {left-right*rl*right
+    (state <s> ^name left-right
+               ^operator <op> +)
+    (<op> ^name move
+          ^dir right)
+-->
+    (<s> ^operator <op> = 0)
+ }
+ 
+ ## Finally we need rules for REWARD. After selecting an action, this rule will fetch the reward based on the choice and store it on the reward link. This reward 
+ ## will influence the indifferent preferences we created earlier.
+ 
+ sp { elaborate*reward
+    (state <s> ^name left-right
+               ^reward-link <r>
+               ^location <d-name>
+               ^direction <dir>)
+    (<dir> ^name <d-name> ^reward <d-reward>)
+-->
+    (<r> ^reward <rr>)
+    (<rr> ^value <d-reward>)
+ }
 
 
 ```
