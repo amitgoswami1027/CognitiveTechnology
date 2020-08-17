@@ -411,6 +411,77 @@ sp { left-right*rl*left
 
 
 ```
+#### REWARD REPRESENTATION
+* Each state in the working memory has a reward-link structure.
+* Reward is recognized by syntax
+
+```
+(<s> ^reward-link <r-link>)
+(<r-link> ^reward <r>)
+(<r> ^value [integer or float])
+
+```
+* The reward link is not directly modified by the enviroment or architecture.
+* Reward is collected at the beginning of each decision phase.
+* Reward on a state's reward-link pertains only to that state.
+* Reward can come from multiple rules: reward values are summed by default.
+* Reward rules examples
+
+```
+sp { left-right*reward*left
+     (state <s> ^name left-right
+                ^location left
+                ^reward-link <rl>)
+-->
+     (<rl> ^reward <r>)
+     (<r> ^value -1)}
+
+sp { left-right*reward*right
+     (state <s> ^name left-right
+                ^location right
+                ^reward-link <rl>)
+-->
+     (<rl> ^reward <r>)
+     (<r> ^value 1)}
+
+```
+#### RL UPDATES
+* Take place during decide phase , after operator selection.
+* For all RL rule instantiations (n) that supported the last selected operator
+
+```
+           valued+1 = valued + ( δd / n )
+  Where, roughly…
+           δd = α[ rewardd+1 + ϒ(qd+1) ‐ valued ]
+
+  Where…
+  • α is a parameter (learning rate)
+  • ϒ is a parameter (discount rate)
+  • qd+1 is dictated by learning policy
+  • On‐policy (SARSA): value of selected operator
+  • Off‐policy (Q‐learning): value of operator with maximum selection probability
+
+```
+### STEPS TO SOLVE SOLVE PROBLEMS USING SOAR (Example Missionsaires and cannibals)
+
+#### First decompose  it into the problem space (state representation and Operators) and the problem(Inital & Desired state).
+* State Decomposition : This would incude positions of missionaries, cannibals and boat, relative to river. 
+* Initial State: Include missionaries, cannibals and boat are on one bank of the rivewr.
+* Operator Proposal rules: Operators move upto two of the missionaries and/or cannibals across the river with the boat.
+* Operator Application rules.
+* Operator and State Monitoring Rules.
+* Goal recognization rules. The desired state is achieved when all missionaries and cannibals have crossed the river.
+* Failure Recognization rules. These rules will identify and detect when a state is created in which goal cannot be achieved.Failure
+states are whenever the cannibals outnumber the missionaries on one bank of the river.
+* The search control rules. 
+
+#### Building Learning agents to take advantage of the RL take three stages:
+* use RL Rules
+* Implement one or more reward rules
+* Enable the reinforcement learning mechanism.
+
+
+
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
