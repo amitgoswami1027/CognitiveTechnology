@@ -91,6 +91,8 @@ Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Proje
 * Application - 'Now that I picked one thing to do, I can now actually do it'
 * Multitasking is an illusion.
 
+* For example, a Soar program for playing chess would have an initial state that described the board and the positions of the pieces. Its operators would supply knowledge about how to transform a state by moving a piece. Knowledge about the desiredstates would describe what it means to win the game: checkmate.
+
 ![image](https://user-images.githubusercontent.com/13011167/84102103-2c32d300-aa2d-11ea-89e6-cfd083edabfb.png)
 
 Real world example: We are building an agent to play a simple video game. The locations of the enemies and our player's health 
