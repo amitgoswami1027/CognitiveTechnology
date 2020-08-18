@@ -2,12 +2,17 @@
 #Moiving right will have a much higher rewars. 
 # Goals would be to taing the agent to move right.
 #RL Need to be enabled before running the agent.
+
+#visualize image-type jpg
+#visualize architectural-wmes on
 rl -s learning on
+indifferent-selection –-epsilon-greedy
+
 
 # Initialization Code
 
-sp{ propose*initialize-left-right
-    (state <s> ^superstate nil)
+sp { propose*initialize-left-right
+    (state <s> ^superstate nil
                -^name)
 -->
    (<s> ^operator <o> +)
@@ -38,14 +43,14 @@ sp { left-right*propose*move
            ^dir <dir>)
 }
 
-sp {apply*move
+sp { left-right*apply*move
    (state <s> ^operator <op>
               ^location start)
    (<op> ^name move
          ^dir <dir>)
 -->
    (<s> ^location start - <dir>)
-   (write (clrf) |Moved:| <dir>)
+   (write (crlf) |Moved:| <dir>)
 }
 
 sp { elaborate*done
