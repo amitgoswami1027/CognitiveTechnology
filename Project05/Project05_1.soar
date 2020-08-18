@@ -1,0 +1,226 @@
+# Project05
+# Amit Goswami
+
+visualize image-type jpg
+visualize architectural-wmes on
+
+
+rl -s learning on
+
+# Initialization Code
+
+sp { propose*addAnimals
+    (state <s> ^type state
+              -^name)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name addAnimals)
+}
+
+sp { apply*addAnimals
+     (state <s> ^operator <o>)
+     (<o> ^name addAnimals)
+--> 
+     (<s> ^name rlw
+          ^side1 <l>
+          ^side2 <r>
+          ^desired <d>)
+     (<r> ^rabbit 0
+          ^lettuce 0
+          ^wolf 0
+          ^boat 0
+          ^other-bank <l>)
+     (<l> ^rabbit 1
+          ^lettuce 1
+          ^wolf 1
+          ^boat 1
+          ^other-bank <r>)
+      (<d> ^side2 <dr>)
+      (<dr> ^rabbit 1
+            ^lettuce 1
+            ^wolf 1
+            ^boat 1)
+}
+
+## Operator Proposal
+## 1. Move rabbit or lettuce or fox to the other side.
+## 2. Move across the river without an item.
+
+sp { propose*move-item-rabbit
+     (state <s> ^name rlw
+                ^<< side1 side2 >> <bank> )
+     (<bank> ^rabbit > 0
+             ^boat 1)
+-->
+     (<s> ^operator <o> + =)
+     (<o> ^name move-rlw-boat 
+          ^bank <bank>
+          ^rabbit 1
+          ^boat 1)
+}
+
+sp { propose*move-item-lettuce
+     (state <s> ^name rlw
+                ^<< side1 side2 >> <bank> )
+     (<bank> ^lettuce > 0
+             ^boat 1)
+-->
+     (<s> ^operator <o> + =)
+     (<o> ^name move-rlw-boat
+          ^bank <bank>
+          ^lettuce 1
+          ^boat 1)
+}
+
+sp { propose*move-item-wolf
+     (state <s> ^name rlw
+                ^<< side1 side2 >> <bank> )
+     (<bank> ^wolf > 0
+             ^boat 1)
+-->
+     (<s> ^operator <o> + =)
+     (<o> ^name move-rlw-boat
+          ^bank <bank>
+          ^wolf 1
+          ^boat 1)
+}
+
+sp { propose*move-item-none
+     (state <s> ^name rlw
+                ^ << side1 side2 >> <bank>)
+     (<bank> ^boat 1)
+-->
+     (<s> ^operator <o> + =)
+     (<o> ^name move-rlw-boat
+          ^bank <bank>
+          ^boat 1) 
+}
+
+sp { apply*move-rlw-boat*rabbit
+     (state <s> ^operator <o>)
+     (<o> ^name move-rlw-boat
+          ^rabbit 1
+          ^bank <bank>)
+     (<bank> ^rabbit  <bank-num>
+             ^other-bank <obank>)
+     (<obank> ^rabbit <obank-num>)
+-->
+     (<bank> ^rabbit  <bank-num> -
+                        (- <bank-num> 1))
+     (<obank> ^rabbit <obank-num> -
+                        ( + <obank-num> 1))
+}
+
+sp { apply*move-rlw-boat*lettuce
+     (state <s> ^operator <o>)
+     (<o> ^name move-rlw-boat
+          ^lettuce 1
+          ^bank <bank>)
+     (<bank> ^lettuce  <bank-num>
+             ^other-bank <obank>)
+     (<obank> ^lettuce <obank-num>)
+-->
+     (<bank> ^lettuce  <bank-num> -
+                        (- <bank-num> 1))
+     (<obank> ^lettuce <obank-num> -
+                        ( + <obank-num> 1))
+}
+
+sp { apply*move-rlw-boat*wolf
+     (state <s> ^operator <o>)
+     (<o> ^name move-rlw-boat
+          ^wolf 1
+          ^bank <bank>)
+     (<bank> ^wolf  <bank-num>
+             ^other-bank <obank>)
+     (<obank> ^wolf <obank-num>)
+-->
+     (<bank> ^wolf  <bank-num> -
+                        (- <bank-num> 1))
+     (<obank> ^wolf <obank-num> -
+                        ( + <obank-num> 1))
+}
+
+
+## State and Opertaot Monitoting
+
+sp { monitor*move-rlw-boat
+   (state <s> ^operator <o>)
+   (<o> ^name move-rlw-boat
+        ^{ << rabbit lettuce wolf >> <type> } <number> )
+-->
+   (write | Move | <number>| | <type> )
+}
+
+sp { monitor*state*left
+   (state <s> ^name rlw
+              ^side1 <l>
+              ^side2 <r>)
+   (<l> ^rabbit <rl>
+        ^lettuce <ll>
+        ^wolf <wl>
+        ^boat 1)
+   (<r> ^rabbit <rr>
+        ^lettuce <lr>
+        ^wolf <wr>
+        ^boat 0)
+-->
+   (write (crlf) | R: | <rl> |, L: | <ll> |, W: | <wl> |B ~~~ |
+                 | R: | <rr> |, L: | <lr> |, W: | <wr> | |)
+}
+
+sp { monitor*state*right
+    (state <s> ^name rlw
+               ^side1 <l>
+               ^side2 <r>)
+    (<l> ^rabbit <rl>
+         ^lettuce <ll>
+         ^wolf <wl>
+         ^boat 0)
+    (<r> ^rabbit <rr>
+         ^lettuce <lr>
+         ^wolf <wr>
+         ^boat 1)
+-->
+(write (crlf) | R: | <rl> |, L: | <ll> |, W: | <wl> |B ~~~ |
+                 | R: | <rr> |, L: | <lr> |, W: | <wr> | |)
+
+}
+
+## Desired State Recognition
+
+sp { mac*detect*state*success
+     (state <s> ^desired <d>
+                ^<side> <ls>)
+     (<ls> ^rabbit <r>
+           ^lettuce <l>
+           ^wolf <w>)
+     (<d> ^{ << side1 side2 >> <side> } <dls>)
+     (<dls> ^rabbit <r>
+            ^lettuce <l>
+            ^wolf <w>)
+-->
+     (write (crlf) | The problem has been solved. |)
+     (halt)
+}
+
+## Detect Failure state
+
+sp { mac*evaluate*state*failure*more*annimals
+    (state <s> ^desired <d>
+               ^<< side1 side2 >> <bank> )
+    (<bank> ^rabbit { <n> > 0}
+            ^lettuce > <n>
+            ^wolf > <n>)
+-->
+   (write (crlf) |The Problem has failed.|)
+   (halt)
+}
+
+
+
+
+
+
+
+
