@@ -91,6 +91,8 @@ Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Proje
 * Application - 'Now that I picked one thing to do, I can now actually do it'
 * Multitasking is an illusion.
 
+* For example, a Soar program for playing chess would have an initial state that described the board and the positions of the pieces. Its operators would supply knowledge about how to transform a state by moving a piece. Knowledge about the desiredstates would describe what it means to win the game: checkmate.
+
 ![image](https://user-images.githubusercontent.com/13011167/84102103-2c32d300-aa2d-11ea-89e6-cfd083edabfb.png)
 
 Real world example: We are building an agent to play a simple video game. The locations of the enemies and our player's health 
@@ -304,9 +306,8 @@ sp {rl*3*12*left
 #### Reqard Update Rules: Reward update rules are written as elaboration rules that change the reward link. By adding a 'reward.link' value, Soar will be able to determine whether the decision it has been is positive or negative. It is usually best to write these rules as elaboration rules (i-supported instead of o-supported).
 
 #### CHUNKING : Chunking is an automatic process in Soar where rules are generated based on the knowledge obtained. When Soar is stuck when deciding, a substate is created. Once the impasse is resolved, the knowledge used to resolve it is lost. Chunking allow Soar to generate rules to 'remember' the knowledge used to resolve the impasse. Therefore, it is important to make decisions in substates, as it allows Soar to learn information.
-* Chunking is SOAR's experience based mechanism for learning new procedural knowledge. Chunking utilizes SOAR's impasse driven model for problem decomposition into 
-sub-goals to create new productions dynamically during task execution. These new Prodcutions are called CHUNKs, summarize the substate problem solving that 
-occuered which led to new knowledge in a superstate. When new rule fires and creates such new superstate knowledge , which is called RESULTS. SOAR learns the new 
+* Chunking is SOAR's experience based mechanism for learning new procedural knowledge. Chunking utilizes SOAR's "impasse driven model" for problem decomposition into sub-goals to create new productions dynamically during task execution. These new Prodcutions are called CHUNKs, summarize the substate problem solving that 
+occuered which led to new knowledge in a superstate. When new rule fires and creates such new superstate knowledge, which is called RESULTS. SOAR learns the new 
 rule and immediately add to the production memory. In future similar situations, the new chunk will fire and create the appropriate results in a
 single step, which eliminates the need to spawn another subgoal to perform similar problemsolving. In other words, rather than contemplating and figuring out what to do, the agent immediately knows what to do.
 * CHUNKING can affect both speed-up and transfer learning. A chunk can effect speed-up learning because it compresses all of the problem-solving needed to produce 
@@ -410,6 +411,77 @@ sp { left-right*rl*left
 
 
 ```
+#### REWARD REPRESENTATION
+* Each state in the working memory has a reward-link structure.
+* Reward is recognized by syntax
+
+```
+(<s> ^reward-link <r-link>)
+(<r-link> ^reward <r>)
+(<r> ^value [integer or float])
+
+```
+* The reward link is not directly modified by the enviroment or architecture.
+* Reward is collected at the beginning of each decision phase.
+* Reward on a state's reward-link pertains only to that state.
+* Reward can come from multiple rules: reward values are summed by default.
+* Reward rules examples
+
+```
+sp { left-right*reward*left
+     (state <s> ^name left-right
+                ^location left
+                ^reward-link <rl>)
+-->
+     (<rl> ^reward <r>)
+     (<r> ^value -1)}
+
+sp { left-right*reward*right
+     (state <s> ^name left-right
+                ^location right
+                ^reward-link <rl>)
+-->
+     (<rl> ^reward <r>)
+     (<r> ^value 1)}
+
+```
+#### RL UPDATES
+* Take place during decide phase , after operator selection.
+* For all RL rule instantiations (n) that supported the last selected operator
+
+```
+           valued+1 = valued + ( δd / n )
+  Where, roughly…
+           δd = α[ rewardd+1 + ϒ(qd+1) ‐ valued ]
+
+  Where…
+  • α is a parameter (learning rate)
+  • ϒ is a parameter (discount rate)
+  • qd+1 is dictated by learning policy
+  • On‐policy (SARSA): value of selected operator
+  • Off‐policy (Q‐learning): value of operator with maximum selection probability
+
+```
+### STEPS TO SOLVE SOLVE PROBLEMS USING SOAR (Example Missionsaires and cannibals)
+
+#### First decompose  it into the problem space (state representation and Operators) and the problem(Inital & Desired state).
+* State Decomposition : This would incude positions of missionaries, cannibals and boat, relative to river. 
+* Initial State: Include missionaries, cannibals and boat are on one bank of the rivewr.
+* Operator Proposal rules: Operators move upto two of the missionaries and/or cannibals across the river with the boat.
+* Operator Application rules.
+* Operator and State Monitoring Rules.
+* Goal recognization rules. The desired state is achieved when all missionaries and cannibals have crossed the river.
+* Failure Recognization rules. These rules will identify and detect when a state is created in which goal cannot be achieved.Failure
+states are whenever the cannibals outnumber the missionaries on one bank of the river.
+* The search control rules. 
+
+#### Building Learning agents to take advantage of the RL take three stages:
+* use RL Rules
+* Implement one or more reward rules
+* Enable the reinforcement learning mechanism.
+
+
+
 
 ### Important Links
 * http://www.matt-versaggi.com/mit_open_courseware/
