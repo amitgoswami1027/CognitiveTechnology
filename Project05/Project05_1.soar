@@ -39,7 +39,7 @@ sp { apply*addAnimals
       (<dr> ^rabbit 1
             ^lettuce 1
             ^wolf 1
-            ^boat 1)
+            )
 }
 
 ## Operator Proposal
@@ -159,11 +159,11 @@ sp { monitor*state*left
    (<l> ^rabbit <rl>
         ^lettuce <ll>
         ^wolf <wl>
-        ^boat 1)
+        ^boat <bl>)
    (<r> ^rabbit <rr>
         ^lettuce <lr>
         ^wolf <wr>
-        ^boat 0)
+        ^boat <br>)
 -->
    (write (crlf) | R: | <rl> |, L: | <ll> |, W: | <wl> |B ~~~ |
                  | R: | <rr> |, L: | <lr> |, W: | <wr> | |)
@@ -176,11 +176,11 @@ sp { monitor*state*right
     (<l> ^rabbit <rl>
          ^lettuce <ll>
          ^wolf <wl>
-         ^boat 0)
+         ^boat <bl>)
     (<r> ^rabbit <rr>
          ^lettuce <lr>
          ^wolf <wr>
-         ^boat 1)
+         ^boat <br>)
 -->
 (write (crlf) | R: | <rl> |, L: | <ll> |, W: | <wl> |B ~~~ |
                  | R: | <rr> |, L: | <lr> |, W: | <wr> | |)
@@ -194,11 +194,13 @@ sp { mac*detect*state*success
                 ^<side> <ls>)
      (<ls> ^rabbit <r>
            ^lettuce <l>
-           ^wolf <w>)
+           ^wolf <w>
+           )
      (<d> ^{ << side1 side2 >> <side> } <dls>)
      (<dls> ^rabbit <r>
             ^lettuce <l>
-            ^wolf <w>)
+            ^wolf <w>
+            )
 -->
      (write (crlf) | The problem has been solved. |)
      (halt)
@@ -206,21 +208,56 @@ sp { mac*detect*state*success
 
 ## Detect Failure state
 
-sp { mac*evaluate*state*failure*more*annimals
+sp { rlw*evaluate*state*failure*rule1
     (state <s> ^desired <d>
-               ^<< side1 side2 >> <bank> )
-    (<bank> ^rabbit { <n> > 0}
-            ^lettuce > <n>
-            ^wolf > <n>)
+               ^side1 <s1>
+               ^side2 <s2>)
+   (<s1> ^rabbit > 0
+         ^wolf > 0
+         ^lettuce = 0)
+   (<s2> ^boat > 0)
 -->
-   (write (crlf) |The Problem has failed.|)
+   (write (crlf) |The Problem has failed - RABBIT EATEN|)
    (halt)
 }
 
+sp { rlw*evaluate*state*failure*rule2
+    (state <s> ^desired <d>
+               ^side1 <s1>
+               ^side2 <s2>)
+   (<s2> ^rabbit > 0
+         ^wolf > 0
+         ^lettuce = 0)
+   (<s1> ^boat > 0)
+-->
+   (write (crlf) |The Problem has failed - RABBIT EATEN|)
+   (halt)
+}
 
+sp { rlw*evaluate*state*failure*rule3
+    (state <s> ^desired <d>
+               ^side1 <s1>
+               ^side2 <s2>)
+   (<s1> ^rabbit  > 0
+         ^lettuce > 0
+         ^wolf = 0)
+   (<s2> ^boat > 0)
+-->
+   (write (crlf) |The Problem has failed - LETTUCE  EATEN|)
+   (halt)
+}
 
-
-
-
+sp { rlw*evaluate*state*failure*rule4
+    (state <s> ^desired <d>
+               ^side1 <s1>
+               ^side2 <s2>)
+   (<s2> ^rabbit > 0
+         ^lettuce > 0
+         ^wolf = 0)
+   (<s1> ^boat > 0)
+-->
+   (write (crlf) |The Problem has failed - LETTUCE  EATEN|)
+   (halt)
+}
 
 
