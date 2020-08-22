@@ -83,6 +83,8 @@ agentt but there can be only one SOAR Agent in the Project. SOAR Agent exists as
 ### Section-02: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 
 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo. - *MY NOTES*
 
+* For example, a Soar program for playing chess would have an initial state that de-scribed the board and the positions of the pieces. Its operators would supply knowl-edge about how to transform a state by moving a piece. Knowledge about the desired states would describe what it means to win the game: checkmate.
+
 #### SOAR DECISION CYCLE
 * PROPOSE => DECISION => APPLICATION
 #### EXAMPLE: 
