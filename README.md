@@ -171,6 +171,15 @@ as many more, one for every rule match. Operators created by rules that don't ma
 Operators should not persist into the next cycle. This is occurring since these changes persist. This shouldn't occur due to a 
 theoretical reason: Soar operators should not exist across cycles as they should get all their work done in the application 
 phase and then be removed.
+### DECISION CYCLE : A Desision cycle is a fixed processing mechanism in soar architecture that does its work in five phases:
+* Input : During input, working memory elements are created that reflect changes in perception.
+* Elaboration : During elaboration, the contents of working memory are matched against the “if” parts of the rules in long-term memory. All rules 
+that matches from procedure memory, fire in parallel, resulting in changes to the features and values of the state in additons to suggestions, or 
+preferences , for selecting the current operator. As a result of working memory changes more rules can fire. Elaboration continues in parallel waves 
+of rule firings unitl no more rule fires. QUIESCENCE in ELABORATION i.e absence of any further LTM rules, signal the start of the decision phase.
+* decison 
+* application and 
+* output. 
 
 ## PROJECT03 - Notes for Reference
 ### Impasses and Substates
