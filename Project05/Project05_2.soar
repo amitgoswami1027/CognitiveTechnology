@@ -49,46 +49,46 @@ sp { apply*addAnimals
 sp { propose*move-item-rabbit
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^rabbit > 0)
-    #         ^boat > 0)
+     (<bank> ^rabbit > 0
+             ^boat > 0)
 -->
      (<s> ^operator <o> +  = )
      (<o> ^name move-rabbit-boat 
           ^bank <bank>
           ^rabbit 1
-          ^boat 0)
+          ^boat 1)
 }
 
 sp { propose*move-item-lettuce
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^lettuce > 0)
-           #  ^boat > 0)
+     (<bank> ^lettuce > 0
+             ^boat > 0)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-lettuce-boat
           ^bank <bank>
           ^lettuce 1
-          ^boat 0)
+          ^boat 1)
 }
 
 sp { propose*move-item-wolf
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^wolf > 0)
-          #   ^boat > 0)
+     (<bank> ^wolf > 0
+             ^boat > 0)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-wolf-boat
           ^bank <bank>
           ^wolf 1
-          ^boat 0)
+          ^boat 1)
 }
 
 sp { propose*move-item-none
      (state <s> ^name rlw
                 ^ << side1 side2 >> <bank>)
-     (<bank> ^boat)
+     (<bank> ^boat > 0)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-boat
