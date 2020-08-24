@@ -49,46 +49,46 @@ sp { apply*addAnimals
 sp { propose*move-item-rabbit
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^rabbit > 0
-             ^boat > 0)
+     (<bank> ^rabbit > 0)
+    #         ^boat > 0)
 -->
      (<s> ^operator <o> +  = )
      (<o> ^name move-rabbit-boat 
           ^bank <bank>
           ^rabbit 1
-          ^boat 1)
+          ^boat 0)
 }
 
 sp { propose*move-item-lettuce
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^lettuce > 0
-             ^boat > 0)
+     (<bank> ^lettuce > 0)
+           #  ^boat > 0)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-lettuce-boat
           ^bank <bank>
           ^lettuce 1
-          ^boat 1)
+          ^boat 0)
 }
 
 sp { propose*move-item-wolf
      (state <s> ^name rlw
                 ^<< side1 side2 >> <bank> )
-     (<bank> ^wolf > 0
-             ^boat > 0)
+     (<bank> ^wolf > 0)
+          #   ^boat > 0)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-wolf-boat
           ^bank <bank>
           ^wolf 1
-          ^boat 1)
+          ^boat 0)
 }
 
 sp { propose*move-item-none
      (state <s> ^name rlw
                 ^ << side1 side2 >> <bank>)
-     (<bank> ^boat > 0)
+     (<bank> ^boat)
 -->
      (<s> ^operator <o>  + = )
      (<o> ^name move-boat
@@ -239,7 +239,7 @@ sp {mac*detect*state*success
      (write (crlf) | The problem has been solved. |)
      (<rl> ^reward.value 10
            ^final-update true)
-#     (halt)
+     (halt)
 }
 
 ## Detect Failure state
@@ -255,7 +255,7 @@ sp {rlw*evaluate*state*failure*rule1
    (<s2> ^boat > 0)
 -->
    (write (crlf) |The Problem has failed - RABBIT EATEN|)
-   (<rl> ^reward.value -10)
+   (<rl> ^reward.value -20)
    (halt)
 }
 
@@ -270,7 +270,7 @@ sp {rlw*evaluate*state*failure*rule2
    (<s1> ^boat > 0)
 -->
    (write (crlf) |The Problem has failed - RABBIT EATEN|)
-   (<rl> ^reward.value -10)
+   (<rl> ^reward.value -20)
    (halt)
 }
 
@@ -285,7 +285,7 @@ sp { rlw*evaluate*state*failure*rule3
    (<s2> ^boat > 0)
 -->
    (write (crlf) |The Problem has failed - LETTUCE  EATEN|)
-   (<rl> ^reward.value -10)
+   (<rl> ^reward.value -20)
    (halt)
 }
 
@@ -300,7 +300,7 @@ sp { rlw*evaluate*state*failure*rule4
    (<s1> ^boat > 0)
 -->
    (write (crlf) |The Problem has failed - LETTUCE  EATEN|)
-   (<rl> ^reward.value -10)
+   (<rl> ^reward.value -20)
    (halt)
 }
 
