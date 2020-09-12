@@ -69,7 +69,9 @@ the highest.
 
 The SOAR language is similar to prolog, it's execution strategy is a form of search called "depth-first search" with some backtracking. By this nature, SOAR may be more suited to search-based methods. So if you'd like to do research into search based algorithms and implement that in SOAR for 2048, I'd think that would be interesting to see. Definitely an extra credit thing though.
 
-### What is the optimal algorithm for the game 2048?
+### Why this is a interesting Problem?
+* It has a random componenet, it is impossible to predict teach time the new tile will be placed. It is impossible to have an algorithm that will solve this each time in the same way. The best way to handle this, is to determine what is likely to be the best move at every stage and play the probability game :)
+* At any point we have only four move to choose from, challange is to figure out which if these four moves will going to be one that has best long-term outcome.
 
 
 
