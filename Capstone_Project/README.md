@@ -73,6 +73,18 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * It has a random componenet, it is impossible to predict teach time the new tile will be placed. It is impossible to have an algorithm that will solve this each time in the same way. The best way to handle this, is to determine what is likely to be the best move at every stage and play the probability game :)
 * At any point we have only four move to choose from, challange is to figure out which if these four moves will going to be one that has best long-term outcome.
 
+### Solution - Logic/Strategy
+* Once we have the below scquence we can simply execute merge and win.(2-2-4-8-16-32-64-128-256-512-1024)
+* Moves to 2048 will be [R-R-D-L-L-L-D-R-R-R]
+* We mean that always leep your biggest tile in the corner. We need to accu,ulate all the tiles in the bottom row and biggest in the corner. So most of the times we will focus on down and right.
+
+| Col1 | Col2| Col3 |Col4 |
+| :--- |:---:| ---: |---: |
+|      |     |      |     |
+|      |  2  |  2   | 4   |
+|  64  | 32  |  16  | 8   |
+|  128 | 256 |  512 | 1024|
+
 
 
 
@@ -80,6 +92,6 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 ## LINKS
 * [2048 AI RUNS[ : http://ronzil.github.io/2048-AI/]
 * [Discussion Random Moves[ : https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048/23853848#23853848
-
+* https://www.quora.com/What-is-the-logic-for-cracking-the-2048-puzzle
 
 
