@@ -77,6 +77,7 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * Once we have the below scquence we can simply execute merge and win.(2-2-4-8-16-32-64-128-256-512-1024)
 * Moves to 2048 will be [R-R-D-L-L-L-D-R-R-R]
 * We mean that always leep your biggest tile in the corner. We need to accu,ulate all the tiles in the bottom row and biggest in the corner. So most of the times we will focus on down and right.
+* Sometimes tiles will spawn such that you cannot move right or down. In such a case, we need to move left, but never move up. It would be difficult to recover if we move up in later part of the game.
 
 | Col1 | Col2| Col3 |Col4 |
 | :--- |:---:| ---: |---: |
