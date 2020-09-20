@@ -74,6 +74,8 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * At any point we have only four move to choose from, challange is to figure out which if these four moves will going to be one that has best long-term outcome.
 
 ### Solution - Logic/Strategy
+
+### STRATEGY : 01
 * Once we have the below scquence we can simply execute merge and win.(2-2-4-8-16-32-64-128-256-512-1024)
 * Moves to 2048 will be [R-R-D-L-L-L-D-R-R-R]
 * We mean that always leep your biggest tile in the corner. We need to accu,ulate all the tiles in the bottom row and biggest in the corner. So most of the times we will focus on down and right.
@@ -86,8 +88,30 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 |  64  | 32  |  16  | 8   |
 |  128 | 256 |  512 | 1024|
 
+### STRATEGY : 02 - AI Strategy for 2048
+* Approach to the AI Programmers in the older/initial days was to simply program the ideals that programmer has in his mind. This results in alot of rules into the 
+  system. Though this approach was sucessful but its brittle and hard. This types of rule based systems mature and in-corporated and is also known as "Expert 
+  Systems". (Heuristic Based)
+* Another Approach is if we can give every position a rating and then choose the best score amount the all the possible options. 
 
+#### MINIMAX ALGORITHM : 
+* This algo can be used for building an AI for two player board game with alternative moves. It's the strategy where maximum node represents best move to make for 
+  highest gain while minimum is the worst move which opponent can make. Manimax is a kind of backtracking algorithm that is used in the game theory to find the 
+  optimal move of the player.In Minimax the two players are called maximizer and minimizer. 
+* The maximizer tries to get the highest score possible while the minimizer tries to do the opposite and get the lowest score possible. Every board state has a 
+  value associated with it. The values of the board are calculated by some heuristics which are unique for every type of game.
+* Our goal is to find the best move for the player. To do so, we can just choose the node with best evaluation score. To make the process smarter, we can also look 
+  ahead and evaluate potential opponent's moves.
+* Technically, we start with the root node and choose the best possible node. We evaluate nodes based on their evaluation scores. In our case, evaluation function 
+  can assign scores to only result nodes (leaves). Therefore, we recursively reach leaves with scores and back propagate the scores. As this is a backtracking 
+  algorithm so it tries all possible moves before taking the final decision which move is the best.
 
+  [!image](https://user-images.githubusercontent.com/13011167/93713698-29db2b80-fb7b-11ea-9f64-62e607156e1d.png)
+  
+ * Maximizer starts with the root node and chooses the move with the maximum score. Unfortunately, only leaves have evaluation scores with them, and hence the 
+   algorithm has to reach leaf nodes recursively. In the given game tree, currently it's the minimizer's turn to choose a move from the leaf nodes, so the nodes 
+   with minimum scores (here, node 3 and 4) will get selected. It keeps picking the best nodes similarly, till it reaches the root node
+ * This algo can be optimized by using the alpha-beta pruning for optimization. 
 
 
 ## LINKS
