@@ -106,7 +106,7 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
   can assign scores to only result nodes (leaves). Therefore, we recursively reach leaves with scores and back propagate the scores. As this is a backtracking 
   algorithm so it tries all possible moves before taking the final decision which move is the best.
 
-  [!image](https://user-images.githubusercontent.com/13011167/93713698-29db2b80-fb7b-11ea-9f64-62e607156e1d.png)
+  ![image](https://user-images.githubusercontent.com/13011167/93713698-29db2b80-fb7b-11ea-9f64-62e607156e1d.png)
   
  * Maximizer starts with the root node and chooses the move with the maximum score. Unfortunately, only leaves have evaluation scores with them, and hence the 
    algorithm has to reach leaf nodes recursively. In the given game tree, currently it's the minimizer's turn to choose a move from the leaf nodes, so the nodes 
