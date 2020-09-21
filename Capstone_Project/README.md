@@ -118,5 +118,6 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * [2048 AI RUNS[ : http://ronzil.github.io/2048-AI/]
 * [Discussion Random Moves[ : https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048/23853848#23853848
 * https://www.quora.com/What-is-the-logic-for-cracking-the-2048-puzzle
-
+* https://github.com/HermanZzz/Smart-2048
+* https://rosettacode.org/wiki/2048
 
