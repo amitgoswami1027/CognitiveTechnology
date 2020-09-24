@@ -101,7 +101,7 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 ### STRATEGY : 03 - Tree Search
 * Tree Search is one of the basis method in AI. It try to search for the possible future states and find the one with the highest possibility to win the game.We can make use of DFS with the given depth to find the all possible states and record the score at each phase and select the patch that recieve the highest score. 
 
-### STRATEGY : 04- ExpectiMax Search
+### STRATEGY : 04- ExpectiMax Search (Recommanded Approach for Expectimax Algo Implementation)
 #### ABOUT THE ALGO
 * Its Specilized verion of the MiniMax Algo. 
 * Difference is that in Expectimax, instead of minimizer trying to minimize the overall utility of the game, MIN node take action by chance and value associated to the min node is the expected value of utility of the states it may take. 
