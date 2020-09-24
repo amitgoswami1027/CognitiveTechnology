@@ -73,9 +73,18 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * It has a random componenet, it is impossible to predict teach time the new tile will be placed. It is impossible to have an algorithm that will solve this each time in the same way. The best way to handle this, is to determine what is likely to be the best move at every stage and play the probability game :)
 * At any point we have only four move to choose from, challange is to figure out which if these four moves will going to be one that has best long-term outcome.
 
-### Solution - Logic/Strategy
+## Solution - Logic/Strategy
 
-### STRATEGY : 01
+### Challanges and Baseline
+* One of the method to take advantage in this game is to put the tiles with larger values at the corner and edges, but randomness makes this strategy risky. Sometimes these larger values tiles are forces to move to the center which no other move possible and newly generated tile may block large value tiles to go back to edges.
+
+### STRATEGY : 01 - AI Strategy in Older days - EXPERT SYSTEMS
+* Approach to the AI Programmers in the older/initial days was to simply program the ideals that programmer has in his mind. This results in alot of rules into the 
+  system. Though this approach was sucessful but its brittle and hard. This types of rule based systems mature and in-corporated and is also known as "Expert 
+  Systems". (Heuristic Based)
+* Another Approach is if we can give every position a rating and then choose the best score amount the all the possible options. 
+
+### STRATEGY : 02 - Basis Experience of playing game multiple times, we found the pattern
 * Once we have the below scquence we can simply execute merge and win.(2-2-4-8-16-32-64-128-256-512-1024)
 * Moves to 2048 will be [R-R-D-L-L-L-D-R-R-R]
 * We mean that always leep your biggest tile in the corner. We need to accu,ulate all the tiles in the bottom row and biggest in the corner. So most of the times we will focus on down and right.
@@ -88,30 +97,66 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 |  64  | 32  |  16  | 8   |
 |  128 | 256 |  512 | 1024|
 
-### STRATEGY : 02 - AI Strategy for 2048
-* Approach to the AI Programmers in the older/initial days was to simply program the ideals that programmer has in his mind. This results in alot of rules into the 
-  system. Though this approach was sucessful but its brittle and hard. This types of rule based systems mature and in-corporated and is also known as "Expert 
-  Systems". (Heuristic Based)
-* Another Approach is if we can give every position a rating and then choose the best score amount the all the possible options. 
 
-#### MINIMAX ALGORITHM : 
-* This algo can be used for building an AI for two player board game with alternative moves. It's the strategy where maximum node represents best move to make for 
-  highest gain while minimum is the worst move which opponent can make. Manimax is a kind of backtracking algorithm that is used in the game theory to find the 
-  optimal move of the player.In Minimax the two players are called maximizer and minimizer. 
-* The maximizer tries to get the highest score possible while the minimizer tries to do the opposite and get the lowest score possible. Every board state has a 
-  value associated with it. The values of the board are calculated by some heuristics which are unique for every type of game.
-* Our goal is to find the best move for the player. To do so, we can just choose the node with best evaluation score. To make the process smarter, we can also look 
-  ahead and evaluate potential opponent's moves.
-* Technically, we start with the root node and choose the best possible node. We evaluate nodes based on their evaluation scores. In our case, evaluation function 
-  can assign scores to only result nodes (leaves). Therefore, we recursively reach leaves with scores and back propagate the scores. As this is a backtracking 
-  algorithm so it tries all possible moves before taking the final decision which move is the best.
+### STRATEGY : 03 - Tree Search
+* Tree Search is one of the basis method in AI. It try to search for the possible future states and find the one with the highest possibility to win the game.We can make use of DFS with the given depth to find the all possible states and record the score at each phase and select the patch that recieve the highest score. 
 
-  ![image](https://user-images.githubusercontent.com/13011167/93713698-29db2b80-fb7b-11ea-9f64-62e607156e1d.png)
-  
- * Maximizer starts with the root node and chooses the move with the maximum score. Unfortunately, only leaves have evaluation scores with them, and hence the 
-   algorithm has to reach leaf nodes recursively. In the given game tree, currently it's the minimizer's turn to choose a move from the leaf nodes, so the nodes 
-   with minimum scores (here, node 3 and 4) will get selected. It keeps picking the best nodes similarly, till it reaches the root node
- * This algo can be optimized by using the alpha-beta pruning for optimization. 
+### STRATEGY : 04- ExpectiMax Search
+#### ABOUT THE ALGO
+* Its Specilized verion of the MiniMax Algo. 
+* Difference is that in Expectimax, instead of minimizer trying to minimize the overall utility of the game, MIN node take action by chance and value associated to the min node is the expected value of utility of the states it may take. 
+* Expectimax algo search, all the possible states of the game at the particular depth and evaluate how good the state is using the Heuristic functions in the leave nodes. 
+* After getting the value, algo carry it up using the branches and evaluate the value of each min and max nodes and finally the agent which is represented by the MAX node will take the action.
+
+### 2048 PROBLEM 
+* We define MAX node as AI Agent, while MIN node as the game itself, which randomly places a newly generated tile on the emply grid on the board after each move. 
+* Agent first first simulate the four actions it can take and pass the state to the MIN node. MIN Node evalaute the value by listing down all the possible values of all the states that the new tile will possibly be, take the expected valueof all those states.  If we run this logic recursively, we get the following working expectimax tree for single player game.
+  ![Image](https://user-images.githubusercontent.com/13011167/94126181-e92e2b80-fe74-11ea-8918-109f66a89d7f.png)
+* To evaluate each state (WITH EXPECTIMAX ALGO), we make use of the certain Heuristics:
+  * PATTERN HEURISTICS: Tile with highest values should be at the corner and second and third tiles should form the MONOTONICITY.
+    ![image](https://user-images.githubusercontent.com/13011167/94126707-91dc8b00-fe75-11ea-9374-e5a0d4688672.png)
+  * CLUSTER HEURISTICS: 
+    * After some trials, we found out that the previous heuristics is not enough to keep the tiles with large value all together. Although three tiles with the
+      largest value has a high probability to stay at one corner, some of the other tiles are spread to two edges, at an opposite corner of the board.
+    * In order for the tiles of the similar value to be close to one another, we make use of the penalty to tiles that stay close together but 
+      have the different value. In order for the agent to minimize the penalty, tiles with large value should come close together to form a cluster, while tiles 
+      with small values only introduce a smaller penalty because they are small in absolute value compare to the larger one, so this heuristics should have minimal 
+      effect on the merging of smaller tiles.
+    
+    ```
+    penalty = 0
+      for each cell on the board as i:
+          for each neighbour of i as j:
+               penalty = penalty + absolute(value[i] - value [j])
+          end loop
+      end loop
+    ```
+  * MONOTONIC HEURISTICS: Tiles should be aligned in increasing or decresing values. To implement this heuristics, we give reward to the states where the tile in 
+    the lower edge and right edge that align monotonically. We keep the other nine cells away from this calculation of this heuristics to make
+    the merging of the tiles with smaller values remain unaffected.
+     ![image](https://user-images.githubusercontent.com/13011167/94127480-9eadae80-fe76-11ea-84e6-e738197bc801.png)
+    * The expectimax search algorithm together with the above heuristics gives better result than the simple tree search in our first approach.
+    * Our expectimax agent on average can reach a score higher than 20000, with 79% of chance winning a game. It even can form a 4096 tile in some rare cases.
+     ![image](https://user-images.githubusercontent.com/13011167/94127701-d9afe200-fe76-11ea-9af6-bb2a770f87fc.png)
+
+    #### ABOUT THE -MINIMAX ALGORITHM : 
+    * This algo can be used for building an AI for two player board game with alternative moves. It's the strategy where maximum node represents best move to make 
+      for highest gain while minimum is the worst move which opponent can make. Manimax is a kind of backtracking algorithm that is used in the game theory to find 
+      the optimal move of the player.In Minimax the two players are called maximizer and minimizer. 
+    * The maximizer tries to get the highest score possible while the minimizer tries to do the opposite and get the lowest score possible. Every board state has a 
+      value associated with it. The values of the board are calculated by some heuristics which are unique for every type of game.
+    * Our goal is to find the best move for the player. To do so, we can just choose the node with best evaluation score. To make the process smarter, we can also 
+      look ahead and evaluate potential opponent's moves.
+    * Technically, we start with the root node and choose the best possible node. We evaluate nodes based on their evaluation scores. In our case, evaluation 
+      function can assign scores to only result nodes (leaves). Therefore, we recursively reach leaves with scores and back propagate the scores. As this is a 
+      backtracking algorithm so it tries all possible moves before taking the final decision which move is the best.
+      ![image](https://user-images.githubusercontent.com/13011167/93713698-29db2b80-fb7b-11ea-9f64-62e607156e1d.png)
+    * Maximizer starts with the root node and chooses the move with the maximum score. Unfortunately, only leaves have evaluation scores with them, and hence the 
+      algorithm has to reach leaf nodes recursively. In the given game tree, currently it's the minimizer's turn to choose a move from the leaf nodes, so the nodes 
+      with minimum scores (here, node 3 and 4) will get selected. It keeps picking the best nodes similarly, till it reaches the root node
+    * This algo can be optimized by using the alpha-beta pruning for optimization. 
+
+
 
 
 ## LINKS
