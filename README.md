@@ -53,33 +53,66 @@ Supported Development Tools/Libraries and Required Downloads
 * VS Code (App Store) or Install Eclipse
 * Graphviz
 
-#### STEPS:
-* Step-01: Install Eclipse : Soar IDE is built as a plug-in to Eclipse, you need to download Eclipse (version 4.5.2 or higher) and install it. http://www.eclipse.org/documentation/
-* Step-02: JAVA : The plugin requires the Java Runtime Environment (JRE) 6.0 or greater, if you do not have it installed.
-* Step-03: Install the Soar IDE Eclipse Plugin - Once Eclipse is installed, you need to download the Soar IDE plug-in
-     1. From the Help menu in Eclipse, select Install New Software... to open the Install dialog.
-     2. Now add a new remote site to download the Soar IDE plug-in:
-        * Click the Add... button to open the Add Repository dialog.
-        * Type Soar IDE into the Name text field in the dialog.
-        * Type https://github.com/soartech/soaride/raw/master/com.soartech.soar.ide.update in the URL text field and click OK.
-     4. A new site should now be displayed in the Install dialog. Make sure the box next to the Soar IDE site is checked, and     
-        click Finish to move on.
-     5. The Updates dialog should now be displayed. Check the box next to the Soar IDE feature, and click Finish.
-     6. Accept the license agreement on the this screen, and click Next.
-     7. Now click Finish to begin installing the plug-in.
-     8. You will be asked to verify the plug-in that is being installed. Click Install All to proceed.
-     9. Eclipse should now ask you to restart in order to complete the installation.
-* Step-04: SOAR PRESPECTIVE: To view the list of available perspectives, from the Window menu choose Open Perspective -> 
-Other, select SOAR and click "Open".
-* Step-05: CREATE SOAR PROJECT: Click "Create a Project" >> General>> Select Project >> Enter Project Name "HelloWorld" >> 
-Finish. Click   right on the Project Name and select "Include Soar Project Support. We would be to see "S" symbol to confirm 
-this step.
-* Step-06: SOAR FILES: Add New SOAR File to the Project. Let its name be Enigma.soar. 
-* Step-07: SOAR AGENT: In order to process the SOAR files, we need to add the SOAR agent. SOAR files can be part of multiple 
-agentt but there can be only one SOAR Agent in the Project. SOAR Agent exists as the text file.
-* Step-08: SOAR PRODUCTIONS: Use sp - Soar Production template built in to the Soar IDE. Type sp and press ctl-space. 
+#### Official Soar Manual
+To facilitate continual updating and improvement of the Soar manual, it is no
+longer distributed as part of the binary release.  The latest version can be
+found at:
 
-### SOAR COURSE INTRODUCTION
+https://soar.eecs.umich.edu/downloads/SoarManual.pdf
+
+#### Launching
+* Navigate to the folder you extracted to
+* Launch Soar
+  * To launch Soar within a graphical user interface
+     * Windows users, run SoarJavaDebugger.bat
+     * Linux and Mac users, run SoarJavaDebugger.sh
+  * To launch Soar using a command line interface,
+    * Windows users, run Soar_CLI.bat
+    * Linux and Mac users, run Soar_CLI.sh
+    * You can also navigate to the /bin directory in a terminal and run the Soar executable directly
+
+Launch options for the CLI and the java debugger are listed at the bottom of this document.
+
+#### Soar-CLI Command Line Options
+    -l            Listen on, i.e. launches Soar kernel in new thread
+    -n            No syntax coloring (for people on light background or on 
+                  Windows, which doesn't support our color codes.  Also turning 
+                  off color does speed up printing.)
+    -p <port>     Listens on port <port>
+    -s <file>     Sources file <file> on load
+
+To manage multiple agents, you can use the commands "create", "list", and 
+"switch".  These are Soar-CLI commands, not native Soar commands.  They are 
+not available in other interfaces, for example the Soar Java Debugger.
+
+#### Soar Java Debugger Command Line Options
+    -remote             Use a remote connection (with default ip/port)
+    -ip xxx             Use this IP value (implies remote connection)
+    -port ppp           Use this port (implies remote connection, without any 
+                        remote options we start a local kernel)
+    -agent <name>       On a remote connection select this agent as initial 
+                        agent
+    -agent <name>       On a local connection use this as the name of the 
+                        initial agent
+    -source <path>      Load this file of productions on launch (only valid 
+                        for local kernel)
+    -quitonfinish       When combined with source causes the debugger to exit 
+                        after sourcing that one file
+    -listen ppp         Use this port to listen for remote connections (only 
+                        valid for a local kernel)
+    -maximize           Start with maximized window
+    -width <width>      Start with this window width
+    -height <height>    Start with this window height
+    -x <x> -y <y>       Start with this window position
+    -cascade            Cascade each window that starts (offseting from the 
+                        -x <x> -y <y> if given). This option now always on. 
+                        Note that providing width/height/x/y => not a maximized 
+                        window.
+
+If you have problems with the debugger, try deleting any .soar* files in your 
+home directory.  Corrupt settings can cause the java debugger to fail to launch.
+
+## SOAR COURSE INTRODUCTION
 ### Section-02: Soar Introduction,The Decision Cycle, Working memory, Procedural Memory, Example 1 Weather, Guided Example 1-1 
 Weather revised, Guided Example 1-2 Debugger set up, Self-assessment 1 AND Project 1 Echo. - *MY NOTES*
 
