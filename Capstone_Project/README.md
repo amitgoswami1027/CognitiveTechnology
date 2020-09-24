@@ -137,7 +137,8 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
     the merging of the tiles with smaller values remain unaffected.
      ![image](https://user-images.githubusercontent.com/13011167/94127480-9eadae80-fe76-11ea-84e6-e738197bc801.png)
     * The expectimax search algorithm together with the above heuristics gives better result than the simple tree search in our first approach.
-    * Our expectimax agent on average can reach a score higher than 20000, with 79% of chance winning a game. It even can form a 4096 tile in some rare cases.
+    * Basis the research and experimentaiton it is found, Expectimax agent on average can reach a score higher than 20000, with 79% of chance winning a game. It 
+      even can form a 4096 tile in some rare cases.
      ![image](https://user-images.githubusercontent.com/13011167/94127701-d9afe200-fe76-11ea-9af6-bb2a770f87fc.png)
 
     #### ABOUT THE -MINIMAX ALGORITHM : 
