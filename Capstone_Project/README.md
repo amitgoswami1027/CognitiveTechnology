@@ -113,7 +113,8 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 * Agent first first simulate the four actions it can take and pass the state to the MIN node. MIN Node evalaute the value by listing down all the possible values of all the states that the new tile will possibly be, take the expected valueof all those states.  If we run this logic recursively, we get the following working expectimax tree for single player game.
   ![Image](https://user-images.githubusercontent.com/13011167/94126181-e92e2b80-fe74-11ea-8918-109f66a89d7f.png)
 * To evaluate each state (WITH EXPECTIMAX ALGO), we make use of the certain Heuristics:
-  * PATTERN HEURISTICS: Tile with highest values should be at the corner and second and third tiles should form the MONOTONICITY.
+  * PATTERN HEURISTICS: Tile with highest values should be at the corner and second and third tiles should form the "MONOTONICITY".
+  
     ![image](https://user-images.githubusercontent.com/13011167/94126707-91dc8b00-fe75-11ea-9374-e5a0d4688672.png)
   * CLUSTER HEURISTICS: 
     * After some trials, we found out that the previous heuristics is not enough to keep the tiles with large value all together. Although three tiles with the
