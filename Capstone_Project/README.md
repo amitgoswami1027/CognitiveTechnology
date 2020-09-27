@@ -161,10 +161,7 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 ## IMPLEMENTATION
 
 ### SOME POINTERS HELPFULL 
-* There are two important differences between the SUPERSTATE and the TOP state. First, the top state doesn’t have any augmentations relating to an impasse, nor  
-  does it have a superstate. Instead, the top state has “ ^superstate nil. ” The second difference is that only the top state has “ io, ” “ input-link, ” and “ 
-  output-link ” augmentations that connect to the perception and action systems. There are no independent  “ input-link ” and “ output-link ” structures in 
-  substates, although it is possible to copy  pointers to the top state structures in the substates. 
+* There are two important differences between the SUPERSTATE and the TOP state. First, the top state doesn’t have any augmentations relating to an impasse, nor does it have a superstate. Instead, the top state has “^superstate nil”. The second difference is that only the top state has “io,” “input-link,” and “output-link ” augmentations that connect to the perception and action systems. There are no independent  “ nput-link” and “output-link” structures in substates, although it is possible to copy pointers to the top state structures in the substates. 
 
 
 ## LINKS
