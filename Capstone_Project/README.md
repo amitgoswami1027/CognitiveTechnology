@@ -162,6 +162,7 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
 
 ### SOME POINTERS HELPFULL 
 * There are two important differences between the SUPERSTATE and the TOP state. First, the top state doesn’t have any augmentations relating to an impasse, nor does it have a superstate. Instead, the top state has “^superstate nil”. The second difference is that only the top state has “io,” “input-link,” and “output-link ” augmentations that connect to the perception and action systems. There are no independent  “ nput-link” and “output-link” structures in substates, although it is possible to copy pointers to the top state structures in the substates. 
+* ??? Episodic Memory - Retrieve Past experiences and model the search logic on the top of it.????
 
 ```
 ## Project CapStone
@@ -453,7 +454,7 @@ sp {use*search*result
 # Elaboration Rules
 ##########################################################################
 
-sp  { elaborate*vote-down
+sp  { elaborate*movedown
       (state <s> ^impasse tie)
      # (<s> ^superstate <ss>)
       (<s> ^epmem.result.retrieved.io.input-link <blocks>)
@@ -462,11 +463,11 @@ sp  { elaborate*vote-down
       (<blocks> ^d = <value>)
       (<blocks> ^value > 0)
 -->
-      (write (crlf) |voting down|)
+      (write (crlf) |move down|)
       (<blocks> ^down true)
 }
 
-sp {elaborate*vote-left
+sp {elaborate*moveleft
     (state <s> ^impasse tie)
     (<s> ^epmem.result.retrieved.io.input-link <blocks>)
     (<blocks> ^<block> <blocks>)
@@ -474,11 +475,11 @@ sp {elaborate*vote-left
     (<blocks> ^l = <value>)
     (<blocks> ^value > 0)
 -->
-    (write (crlf) |voting left|)
+    (write (crlf) |move left|)
     (<blocks> ^left true)
 }
 
-sp {elaborate*vote-right
+sp {elaborate*moveright
     (state <s> ^impasse tie)
     (<s> ^epmem.result.retrieved.io.input-link <blocks>)
     (<blocks> ^<block> <blocks>)
@@ -486,7 +487,7 @@ sp {elaborate*vote-right
     (<blocks> ^r = <value>)
     (<blocks> ^value > 0)
 -->
-    (write (crlf) |voting right|)
+    (write (crlf) |move right|)
     (<blocks> ^right true)
 }
 
