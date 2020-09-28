@@ -158,11 +158,465 @@ The SOAR language is similar to prolog, it's execution strategy is a form of sea
       with minimum scores (here, node 3 and 4) will get selected. It keeps picking the best nodes similarly, till it reaches the root node
     * This algo can be optimized by using the alpha-beta pruning for optimization. 
 
-## IMPLEMENTATION
+## IMPLIMENTATION
 
 ### SOME POINTERS HELPFULL 
 * There are two important differences between the SUPERSTATE and the TOP state. First, the top state doesn’t have any augmentations relating to an impasse, nor does it have a superstate. Instead, the top state has “^superstate nil”. The second difference is that only the top state has “io,” “input-link,” and “output-link ” augmentations that connect to the perception and action systems. There are no independent  “ nput-link” and “output-link” structures in substates, although it is possible to copy pointers to the top state structures in the substates. 
 
+```
+## Project CapStone
+# Amit Goswami
+
+visualize image-type jpg
+visualize architectural-wmes on
+
+epmem -e
+epmem --set timers off
+
+#rl --set learning on
+#indifferent-selection –-epsilon-greedy
+#indifferent-selection -g
+
+############################################################
+#Initializing the Board Game and Inputs for the 2048 Game 
+###########################################################
+
+sp {  propose*init
+      (state <s> ^superstate nil
+                -^init-game)
+  -->
+     (<s> ^operator <op> + )
+     (<op> ^name init-game)
+}
+
+sp {  apply*init
+      (state <s> ^operator <op>
+                 ^io.input-link <input>)
+      (<op> ^name init-game)
+  -->
+     (<s> ^init-game true)
+     (<s> ^reset false)
+     
+     (<s> ^up false)
+     (<s> ^down false)
+     (<s> ^right false)
+     (<s> ^left false)
+
+     (<input> ^block0 <block0> ^block1 <block1> ^block2 <block2> ^block3 <block3>
+              ^block4 <block4> ^block5 <block5> ^block6 <block6> ^block7 <block7>
+              ^block8 <block8> ^block9 <block9> ^block10 <block10> ^block11 <block11>
+              ^block12 <block12> ^block13 <block13> ^block14 <block14> ^block15 <block15>)
+   
+     (<block0> ^name block0-0 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val000> ^dblock <val001> ^rblock <val002> ^lblock <val003> ^wall <dir0> ^change.count <cal0>)
+     (<block1> ^name block0-1 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val010> ^dblock <val011> ^rblock <val012> ^lblock <val013> ^wall <dir1> ^change.count <cal1>)
+     (<block2> ^name block0-2 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val020> ^dblock <val021> ^rblock <val022> ^lblock <val023> ^wall <dir2> ^change.count <cal2>)
+     (<block3> ^name block0-3 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val030> ^dblock <val031> ^rblock <val032> ^lblock <val033> ^wall <dir3> ^change.count <cal3>)
+
+     (<block4> ^name block1-0 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val100> ^dblock <val101> ^rblock <val102> ^lblock <val103> ^wall <dir4> ^change.count <cal4>)
+     (<block5> ^name block1-1 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val110> ^dblock <val111> ^rblock <val112> ^lblock <val113> ^wall <dir5> ^change.count <cal5>)
+     (<block6> ^name block1-2 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val120> ^dblock <val121> ^rblock <val122> ^lblock <val123> ^wall <dir6> ^change.count <cal6>)
+     (<block7> ^name block1-3 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val130> ^dblock <val131> ^rblock <val32> ^lblock <val133> ^wall <dir7> ^change.count <cal7>)
+
+     (<block8> ^name block2-0 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val200> ^dblock <val201> ^rblock <val202> ^lblock <val203> ^wall <dir8> ^change.count <cal8>)
+     (<block9> ^name block2-1 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val210> ^dblock <val211> ^rblock <val212> ^lblock <val213> ^wall <dir9> ^change.count <cal9>)
+     (<block10> ^name block2-2 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val220> ^dblock <val221> ^rblock <val222> ^lblock <val223> ^wall <dir10> ^change.count <cal10>)
+     (<block11> ^name block2-3 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val230> ^dblock <val231> ^rblock <val232> ^lblock <val233> ^wall <dir11> ^change.count <cal11>)
+
+     (<block12> ^name block3-0 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val300> ^dblock <val301> ^rblock <val302> ^lblock <val303> ^wall <dir12> ^change.count <cal12>)
+     (<block13> ^name block3-1 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val310> ^dblock <val311> ^rblock <val312> ^lblock <val313> ^wall <dir13> ^change.count <cal13>)
+     (<block14> ^name block3-2 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val320> ^dblock <val321> ^rblock <val322> ^lblock <val323> ^wall <dir14> ^change.count <cal14>)
+     (<block15> ^name block3-3 ^value 0 ^u 0 ^d 4 ^l 16 ^r 0 ^ublock <val330> ^dblock <val331> ^rblock <val332> ^lblock <val333> ^wall <dir15> ^change.count <cal15>)
+
+}
+
+##########################################################
+#Cleaning the Output Link and other Variables.
+##########################################################
+
+sp { top*propose*cleanupOutput1
+     (state <s> ^superstate nil 
+                ^io.output-link <output>)
+     (<output> ^<cmd> <id>)
+     (<id> ^status)
+     (<s> ^reset true)
+-->
+     (<s> ^operator cleanOut + !)
+}
+
+sp { top*apply*cleanupOutput1
+     (state <s> ^operator <op> 
+                ^superstate nil 
+                ^io.output-link <output>)
+     (<output> ^<cmd> <id>)
+     (<id> ^status)
+     (<s> ^reset true)
+-->
+     (<output> ^<cmd> <id> -)
+     (<s> ^reset true -)
+     (<s> ^reset false)
+}
+
+##############################################################
+#Proposing the Operators for Up, Down, Right and Left and 
+#choosing between then basis the logic for the movement
+#############################################################
+     
+sp { propose*move-up
+    (state <s> ^superstate nil)
+    (<s> ^io.input-link <input>)
+    (<input> ^block0 <block>)
+-->
+    (<s> ^operator <o> + )
+    (<o> ^name move
+         ^direction u)
+}
+
+sp { propose*move-down
+     (state <s> ^superstate nil)
+     (<s> ^io.input-link <input>)
+     (<input> ^block0 <block>)
+-->
+     (<s> ^operator <o> + )
+     (<o> ^name move
+          ^direction d)
+}
+
+sp { propose*move-left
+     (state <s> ^superstate nil)
+     (<s> ^io.input-link <input>)
+     (<input> ^block0 <block>)
+-->
+     (<s> ^operator <o> + )
+     (<o> ^name move
+          ^direction l)
+}
+
+sp { propose*move-right
+     (state <s> ^superstate nil)
+     (<s> ^io.input-link <input>)
+     (<input> ^block0 <block>)
+-->
+     (<s> ^operator <o> + )
+     (<o> ^name move
+          ^direction r)
+}
+
+
+#####################################################################
+# Apply Logic for moves
+####################################################################
+
+sp {apply*move
+     (state <s> ^operator.direction <dir>
+                ^io.output-link <output>)
+-->
+     (<output> ^command.name move
+               ^move.direction <dir>)
+      (write (crlf) |moving: | <dir>)
+}
+
+
+#gp { propose*moves
+#     (state <s> ^io.input-link <input>)
+#                (<input> ^status ok
+#                         ^move-num <mn>)
+#-->
+#   (<s> ^operator <o> + =)
+#   (<o> ^direction [left right up down])
+#}
+
+#sp { apply*move*remove
+#:o-support
+#    (state <s> ^io.output-link <output>)
+#    (<output> ^move <move>
+#              ^command <cmd>)
+#    (<move> ^status complete)
+#    (<cmd> ^status complete)
+#-->
+#    (<output> ^move <move> -
+#              ^command <cmd> -)
+#     (write (crlf) |removing move command|)
+#}
+
+#sp {propose*moves
+#   (state <s> ^io.input-link (^status ok
+#                              ^move-num <mn>))
+#-->
+#   (<s> ^operator <o1> + = .5
+#        ^operator <o2> + = .9
+#        ^operator <o3> + =  .1
+#        ^operator <o4> + = .8)
+#        (<o1> ^direction left)
+#        (<o2> ^direction right)
+#        (<o3> ^direction up)
+#        (<o4> ^direction down)}
+
+##############################################################
+#Breaking the Impasse and selecting the particular direction
+##############################################################
+
+sp { propose*Substate*BreakImpasse
+     (state <s> ^impasse tie)
+     (<s> ^io.input-link <input>)
+     (<s> ^board.block0 <board>)
+     
+     (<input> ^block0 <block>)
+     (<s> ^item <o1>)
+     (<s> ^item <o2>)
+     (<s> ^item <o3>)
+     (<s> ^item <o4>)
+     (<o1> ^name move 
+           ^direction u)
+     (<o2> ^name move 
+           ^direction r)
+     (<o3> ^name move 
+           ^direction l)
+     (<o4> ^name move 
+           ^direction d)
+     (<board> -^up true)
+     (<board> -^right true)
+     (<board> -^left true)
+     (<board> -^down true)
+    -->
+     (<s> ^operator <o> + =)
+     (<o> ^name breakImpasse)
+     (<o> ^name1 move 
+          ^direction u)
+     (<o> ^name2 move 
+          ^direction r)
+     (<o> ^name3 move 
+          ^direction l)
+     (<o> ^name4 move 
+          ^direction d)
+}
+
+sp { apply*Substate*BreakImpasse
+     (state <s> ^operator <o>)
+     (<o> ^name breakImpasse)
+     (<o> ^name1 <name1>)
+     (<o> ^name1 <name2>)
+     (<o> ^name1 <name3>)
+     (<o> ^name1 <name4>)      
+     
+     (<s> ^superstate <ss>)
+     (<ss> ^operator <o1> +)
+     (<ss> ^operator <o2> +)
+     (<ss> ^operator <o3> +)
+     (<ss> ^operator <o4> +)
+     
+     (<o1> ^name move ^direction u)
+     (<o2> ^name move ^direction r)
+     (<o3> ^name move ^direction l)
+     (<o4> ^name move ^direction d)
+-->
+    (<ss> ^operator <o1> + = 0.3)
+    (<ss> ^operator <o2> + = 0.9)
+    (<ss> ^operator <o3> + = 0.5)
+    (<ss> ^operator <o4> + = 0.8)
+}
+
+
+######################################################################################################
+# Fetching the inputs and other details related to the Board using the episodic memory!!
+#####################################################################################################
+
+sp { propose*search
+     (state <s> ^impasse tie)
+   -->
+     (<s> ^operator <o> + =)
+     (<o> ^name search)
+     (write (crlf) |tie, proposing to handle|)
+}
+
+sp { apply*search
+     (state <s> ^operator.name search
+                ^superstate <ss>
+                ^epmem.command <ec>)
+          (<ss> ^io.input-link <b>)
+   -->
+          (<ec> ^query <q>)
+          (<q> ^io <io>)
+          (<io> ^input-link <b>
+                ^output-link.move <m>)
+}
+
+sp {use*search*result
+:interrupt
+   (state <s> ^superstate <ss>
+              ^epmem.result.success <q>
+              ^item <o>)
+   -->
+   (<ss> ^operator <o> + =)}
+
+
+###########################################################################
+# Elaboration Rules
+##########################################################################
+
+sp  { elaborate*vote-down
+      (state <s> ^impasse tie)
+     # (<s> ^superstate <ss>)
+      (<s> ^epmem.result.retrieved.io.input-link <blocks>)
+      (<blocks> ^<block> <blocks>)
+      (<blocks> ^value <value>)
+      (<blocks> ^d = <value>)
+      (<blocks> ^value > 0)
+-->
+      (write (crlf) |voting down|)
+      (<blocks> ^down true)
+}
+
+sp {elaborate*vote-left
+    (state <s> ^impasse tie)
+    (<s> ^epmem.result.retrieved.io.input-link <blocks>)
+    (<blocks> ^<block> <blocks>)
+    (<blocks> ^value <value>)
+    (<blocks> ^l = <value>)
+    (<blocks> ^value > 0)
+-->
+    (write (crlf) |voting left|)
+    (<blocks> ^left true)
+}
+
+sp {elaborate*vote-right
+    (state <s> ^impasse tie)
+    (<s> ^epmem.result.retrieved.io.input-link <blocks>)
+    (<blocks> ^<block> <blocks>)
+    (<blocks> ^value <value>)
+    (<blocks> ^r = <value>)
+    (<blocks> ^value > 0)
+-->
+    (write (crlf) |voting right|)
+    (<blocks> ^right true)
+}
+
+
+sp {elaborate*state*name
+    (state <s> ^superstate.operator.name <name>)
+-->
+    (<s> ^name <name>)
+}
+
+sp { elaborate*state*top-state
+     (state <s> ^superstate.top-state <ts>)
+-->
+     (<s> ^top-state <ts>)
+}
+
+sp { elaborate*top-state*top-state
+     (state <s> ^superstate nil)
+-->
+     (<s> ^top-state <s>)
+}
+
+sp {elaborate*state*io
+    (state <s> ^superstate.io <io>)
+-->
+    (<s> ^io <io>)
+}
+
+
+########################################################################################################################
+#Rule Template : Rule templates allow Soar to dynamically generate new RL rules based on a predefined pattern as the 
+#agent encounters novel states. This is useful when either the domains of environment dimensions are not known ahead of 
+#time, or when the enumerable state space of the environment is too large to capture in its entirety using gp, but the 
+#agent will only encounter a small fraction of that space during its execution.Templates give the programmer the 
+#convenience of the gp command without lling production memory with unnecessary rules.
+#######################################################################################################################
+
+sp { generated*rule*template
+     :template
+     (state <s> ^operator <op> +)
+     (<op> ^name move ^direction r)
+     (<s> ^io.input-link <input>)
+     # (<op> ^name move ^direction r) 
+     (<input> ^block0.value <val0>)
+     (<input> ^block1.value <val1>)
+     (<input> ^block2.value <val2>)
+     (<input> ^block3.value <val3>)
+     (<input> ^block4.value <val4>)
+     (<input> ^block5.value <val5>)
+     (<input> ^block6.value <val6>)
+     (<input> ^block7.value <val7>)
+     (<input> ^block8.value <val8>)
+     (<input> ^block9.value <val9>)
+     (<input> ^block10.value <val10>)
+     (<input> ^block11.value <val11>)
+     (<input> ^block12.value <val12>)
+     (<input> ^block13.value <val13>)
+     (<input> ^block14.value <val14>)
+     (<input> ^block15.value <val15>)
+-->
+    (<s> ^operator <op> = 0)
+}
+
+sp { generated*rule*template
+     :template
+    (state <s> ^operator <op> +)
+    (<op> ^name move ^direction r)
+    (<s> ^io.input-link <input>)
+    (<input> ^<block>.value > 0)
+    (<input> ^<block>.value <val>)
+    (<input> ^<block>.u <uVal>)
+    (<input> ^<block>.l <lVal>)
+    (<input> ^<block>.r <rVal>)
+    (<input> ^<block>.d <dVal>)
+-->
+    (<s> ^operator <op> = 0)
+}
+
+sp { generated*rule*template
+     :template
+     (state <s> ^operator <op> +)
+     (<op> ^name move ^direction l)
+     (<s> ^io.input-link <input>)
+     (<input> ^<block>.value > 0)
+     (<input> ^<block>.value <val>)
+     (<input> ^<block>.u <uVal>)
+     (<input> ^<block>.l <lVal>)
+     (<input> ^<block>.r <rVal>)
+     (<input> ^<block>.d <dVal>)
+-->
+     (<s> ^operator <op> = 0)
+}
+
+sp { generated*rule*template
+     :template
+     (state <s> ^operator <op> +)
+     (<op> ^name move ^direction d)
+     (<s> ^io.input-link <input>)
+     (<input> ^<block>.value > 0)
+     (<input> ^<block>.value <val>)
+     (<input> ^<block>.u <uVal>)
+     (<input> ^<block>.l <lVal>)
+     (<input> ^<block>.r <rVal>)
+     (<input> ^<block>.d <dVal>)
+-->
+     (<s> ^operator <op> = 0)
+}
+
+
+####################################################################
+# Halting the Soar Program after 25 runs
+###################################################################
+
+#sp { propose*halt
+#     (state <s> ^io.input-link.round <r> > 25)
+#  -->
+#     (<s> ^operator <o> + >)
+#     (<o> ^name halt)
+#}
+
+#sp { apply*halt
+#     (state <s> ^operator.name halt)
+#  -->
+#     (write |reached max rounds, halting|)
+#     (halt)
+#}
+
+##################################################################
+
+```
 
 ## LINKS
 * [2048 AI RUNS[ : http://ronzil.github.io/2048-AI/]
