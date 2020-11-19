@@ -536,6 +536,9 @@ states are whenever the cannibals outnumber the missionaries on one bank of the 
 * SOAR DOWNLOADS: https://soar.eecs.umich.edu/downloads
 * Videos of VISCA Talks : https://visca.engin.umich.edu/
 * [Reinforcement Leaerning] : https://www.freecodecamp.org/news/an-introduction-to-q-learning-reinforcement-learning-14ac0b4493cc/
+* https://blog.athenagt.com/difference-between-artificial-intelligence-and-cognitive-computing-athenas-tech-head-answers-the-questions/
+* https://towardsdatascience.com/ai-and-cognitive-computing-fc701b4fbae7
+* 
 
 
 
