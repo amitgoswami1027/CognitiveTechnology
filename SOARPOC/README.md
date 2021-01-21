@@ -1,8 +1,20 @@
 ## SOAR TECH - Pre-Diabeties POC 
 
+### Problem Space Navigation
+Oder of Processing: 
+* Initialize Problem Space
+* Collect Problems a) Subspace: Identify Omaha Problems
+* Address Problems b) Subspace: Return Intervensions
+* Output Care Plan
+* ONC : Proposals without a corresponding APPLY.
+* Impasse Resolution: The return of the ^problem-data structure from the Substate. 
+![image](https://user-images.githubusercontent.com/13011167/105391675-5d6cb600-5c40-11eb-876a-082b9285a76b.png)
 
 
 
+Initial Problem State Diagram (kinda like a cognitive flow chart of sorts) for the POC – it’ll be a roadmap of sorts as we build out components of the POC. 
+
+![image](https://user-images.githubusercontent.com/13011167/105391204-e46d5e80-5c3f-11eb-945b-4da23eb99c71.png)
 
 
 
